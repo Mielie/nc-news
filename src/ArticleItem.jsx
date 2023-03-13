@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 
-const ArticleItem = ({ article }) => {
+const ArticleItem = ({ article, className }) => {
 	return (
-		<div className="articleListItem">
+		<div className={`articleListItem ${className}`}>
 			<img
 				className="articleListItemImage"
 				src={article.article_img_url}

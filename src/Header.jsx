@@ -3,7 +3,9 @@ const Header = () => {
 		<header>
 			<div id="headerContainer">
 				<h1 id="titleText">NCNews</h1>
-				<button id="loginButton">Login</button>
+				<button id="loginButton" className="brandedButton">
+					Login
+				</button>
 			</div>
 			<div id="filterBar"></div>
 			<div id="sortBar"></div>

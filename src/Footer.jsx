@@ -11,25 +11,35 @@ const Footer = ({
 		setPageNumber(Number(event.target.innerText));
 	};
 
-	if (totalPages <= 5) {
-		for (let p = 1; p <= totalPages; p++) {
-			pageNumbers.push(
-				<button
-					className="pageNumberButton"
-					key={p}
-					disabled={p === pageNumber ? true : false}
-					onClick={changePage}
-				>
-					{p}
-				</button>
-			);
-		}
+	let p = pageNumber - 2;
+	let q = pageNumber + 2;
+
+	if (totalPages <= 5 || pageNumber <= 3) {
+		p = 1;
+		q = totalPages;
+	} else if (pageNumber >= totalPages - 5) {
+		p = totalPages - 5;
+		q = totalPages;
+	}
+
+	for (let n = p; n <= q; n++) {
+		pageNumbers.push(
+			<button
+				className="brandedButton pageNumberButton"
+				key={n}
+				disabled={n === pageNumber ? true : false}
+				onClick={changePage}
+			>
+				{n}
+			</button>
+		);
 	}
 
 	return numArticles ? (
 		<footer id="footerBox">
-			<div id="pageNumberText">
-				{numArticles <= 10 ? `${numArticles} articles` : pageNumbers}
+			<div id="pageNumberText">{pageNumbers}</div>
+			<div id="articleCount">
+				{`${numArticles} article${numArticles === 1 ? "" : "s"}`}
 			</div>
 		</footer>
 	) : (
