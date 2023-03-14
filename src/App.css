@@ -2,6 +2,7 @@
   text-align: center;
   width: 100vw;
   height: 100vh;
+  font-family: arial;
 }
 
 * {
@@ -204,6 +205,76 @@ header {
   height: 30px;
 }
 
+#commentsBox {
+  width: 100vw;
+  min-height: 300px;
+  background-color: #f4f2f1;
+}
+
+#commentLoadingSpinner {
+  left: 50%;
+  margin-left: -40px;
+}
+
+#commentsTitle {
+  margin-top: 20px;
+  text-align: center;
+  font-size: medium;
+  font-weight: bold;
+  color: #414d52;
+  font-family: arial;
+}
+
+.commentCard {
+  display: grid;
+  grid-template-columns: 40px auto 100px;
+  grid-template-rows: 40px auto 25px;
+  grid-template-areas:
+    "commentAvatar commentAuthor commentVotes"
+    "commentBody commentBody commentBody"
+    "commentDate commentDate commentDate";
+  background-color: #f9f2ec;
+  border: 1px solid #a2baab;
+  border-radius: 10px;
+  margin: 10px 20px 10px 20px;
+  box-shadow: 0px 0px 3px #414d52;
+}
+
+.commentAvatar {
+  grid-area: commentAvatar;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin: auto;
+}
+
+.commentAuthor {
+  grid-area: commentAuthor;
+  line-height: 40px;
+  font-style: italic;
+}
+
+.commentVotes {
+  grid-area: commentVotes;
+  line-height: 40px;
+  text-align: right;
+  margin-right: 20px;
+}
+
+.commentBody {
+  grid-area: commentBody;
+  text-align: justify;
+  margin: 10px;
+}
+
+.commentDate {
+  grid-area: commentDate;
+  text-align: right;
+  margin: 0px 20px 0px 0px;
+  font-size: small;
+  color: #414d52;
+}
+
 #footerBox {
   position: fixed;
   left: 0;
@@ -225,7 +296,7 @@ header {
   font-weight: bold;
 }
 
-#articleCount {
+#footerRightText {
   font-weight: bold;
   grid-column: 3;
   text-align: right;
@@ -233,14 +304,8 @@ header {
   line-height: 28px;
 }
 
-#wordCount {
-  font-weight: bold;
-  grid-column: 2;
-  line-height: 28px;
-}
-
 @media (max-width: 500px) {
-  #articleCount {
+  #footerRightText {
     display: none;
   }
 }

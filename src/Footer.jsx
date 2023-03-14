@@ -3,14 +3,50 @@ import { useLocation } from "react-router-dom";
 const Footer = ({
 	pageNumber,
 	setPageNumber,
-	numArticles,
+	commentPageNumber,
+	setCommentPageNumber,
+	numItems,
 	articlesPerPage,
 	articleWordCount,
 }) => {
 	const { pathname: path } = useLocation();
 
 	const articleView = /\/articles\/[0-9]+/i.test(path);
-	const totalPages = Math.ceil(numArticles / articlesPerPage);
+	const totalPages = Math.ceil(numItems / articlesPerPage);
+	const pageNumbers = createPageNumberButtons(
+		articleView ? commentPageNumber : pageNumber,
+		totalPages,
+		setPageNumber,
+		setCommentPageNumber,
+		articleView
+	);
+
+	return numItems ? (
+		<footer id="footerBox">
+			<div id="pageNumberText">
+				<span>Page: </span>
+				{pageNumbers}
+			</div>
+			<div id="footerRightText">
+				{articleView
+					? articleWordCount
+						? `${articleWordCount} words`
+						: null
+					: `${numItems} article${numItems === 1 ? "" : "s"}`}
+			</div>
+		</footer>
+	) : (
+		<footer id="footerBox"></footer>
+	);
+};
+
+const createPageNumberButtons = (
+	pageNumber,
+	totalPages,
+	setPageNumber,
+	setCommentPageNumber,
+	articleView
+) => {
 	const pageNumbers = [];
 
 	let start = pageNumber - 2;
@@ -30,31 +66,15 @@ const Footer = ({
 				className="brandedButton pageNumberButton"
 				key={n}
 				disabled={n === pageNumber ? true : false}
-				onClick={() => setPageNumber(n)}
+				onClick={() => {
+					articleView ? setCommentPageNumber(n) : setPageNumber(n);
+				}}
 			>
 				{n}
 			</button>
 		);
 	}
-	return articleView ? (
-		<footer id="footerBox">
-			<div id="wordCount">
-				{articleWordCount ? `${articleWordCount} words` : null}
-			</div>
-		</footer>
-	) : numArticles ? (
-		<footer id="footerBox">
-			<div id="pageNumberText">
-				<span>Page: </span>
-				{pageNumbers}
-			</div>
-			<div id="articleCount">
-				{`${numArticles} article${numArticles === 1 ? "" : "s"}`}
-			</div>
-		</footer>
-	) : (
-		<footer id="footerBox"></footer>
-	);
+	return pageNumbers;
 };
 
 export default Footer;

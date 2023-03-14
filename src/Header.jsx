@@ -1,5 +1,4 @@
 import { useLocation, Link } from "react-router-dom";
-import ArticleList from "./ArticleList";
 
 const Header = () => {
 	const { pathname: path } = useLocation();
