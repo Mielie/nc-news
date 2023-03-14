@@ -1,18 +1,17 @@
 import { useState, useEffect } from "react";
 import { getArticles } from "./apiFunctions";
 import ArticleItem from "./ArticleItem";
-import { formatDate } from "./utils";
-import Footer from "./Footer";
 import LoadingSpinner from "./LoadingSpinner";
 
-const ArticleList = ({ setNumArticles, pageNumber }) => {
+const ArticleList = ({ setNumItems, pageNumber }) => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [articles, setArticles] = useState([]);
 
 	useEffect(() => {
 		setIsLoading(true);
+		setNumItems(null);
 		getArticles(pageNumber).then((articles) => {
-			setNumArticles(articles.total_count);
+			setNumItems(articles.total_count);
 			setArticles(articles.articles);
 			setIsLoading(false);
 		});

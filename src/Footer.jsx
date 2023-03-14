@@ -3,34 +3,36 @@ import { useLocation } from "react-router-dom";
 const Footer = ({
 	pageNumber,
 	setPageNumber,
-	numArticles,
+	commentPageNumber,
+	setCommentPageNumber,
+	numItems,
 	articlesPerPage,
 	articleWordCount,
 }) => {
 	const { pathname: path } = useLocation();
 
 	const articleView = /\/articles\/[0-9]+/i.test(path);
-	const totalPages = Math.ceil(numArticles / articlesPerPage);
+	const totalPages = Math.ceil(numItems / articlesPerPage);
 	const pageNumbers = createPageNumberButtons(
-		pageNumber,
+		articleView ? commentPageNumber : pageNumber,
 		totalPages,
-		setPageNumber
+		setPageNumber,
+		setCommentPageNumber,
+		articleView
 	);
 
-	return articleView ? (
-		<footer id="footerBox">
-			<div id="wordCount">
-				{articleWordCount ? `${articleWordCount} words` : null}
-			</div>
-		</footer>
-	) : numArticles ? (
+	return numItems ? (
 		<footer id="footerBox">
 			<div id="pageNumberText">
 				<span>Page: </span>
 				{pageNumbers}
 			</div>
-			<div id="articleCount">
-				{`${numArticles} article${numArticles === 1 ? "" : "s"}`}
+			<div id="footerRightText">
+				{articleView
+					? articleWordCount
+						? `${articleWordCount} words`
+						: null
+					: `${numItems} article${numItems === 1 ? "" : "s"}`}
 			</div>
 		</footer>
 	) : (
@@ -38,7 +40,13 @@ const Footer = ({
 	);
 };
 
-const createPageNumberButtons = (pageNumber, totalPages, setPageNumber) => {
+const createPageNumberButtons = (
+	pageNumber,
+	totalPages,
+	setPageNumber,
+	setCommentPageNumber,
+	articleView
+) => {
 	const pageNumbers = [];
 
 	let start = pageNumber - 2;
@@ -58,7 +66,9 @@ const createPageNumberButtons = (pageNumber, totalPages, setPageNumber) => {
 				className="brandedButton pageNumberButton"
 				key={n}
 				disabled={n === pageNumber ? true : false}
-				onClick={() => setPageNumber(n)}
+				onClick={() => {
+					articleView ? setCommentPageNumber(n) : setPageNumber(n);
+				}}
 			>
 				{n}
 			</button>
