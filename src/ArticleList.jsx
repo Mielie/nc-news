@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import ArticleItem from "./ArticleItem";
-import Footer from "./Footer";
+import { formatDate } from "./utils";
 
 const ArticleList = ({ setNumArticles, pageNumber }) => {
 	const [isLoading, setIsLoading] = useState(true);
