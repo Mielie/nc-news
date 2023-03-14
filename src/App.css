@@ -1,3 +1,262 @@
 .App {
   text-align: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+header {
+  background-color: #fdf1e6;
+  position: sticky;
+  top: 0;
+  box-shadow: 0px 0px 10px #414d52;
+}
+
+#headerContainer {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: 80px;
+}
+
+#titleText {
+  grid-column: 1;
+  line-height: 80px;
+  font-size: x-large;
+  text-align: left;
+  margin-left: 20px;
+  color: #414d52;
+}
+
+.brandedButton {
+  border: 2px solid #414d52;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: #fdf1e6;
+  color: #414d52;
+}
+
+.brandedButton:hover {
+  background-color: #a2baab;
+  box-shadow: 0px 0px 5px #414d52;
+  font-weight: bold;
+}
+
+#loginButton {
+  grid-column: 2;
+  width: 50px;
+  height: 50px;
+  margin: auto 20px auto auto;
+}
+
+#articleListBox {
+  margin-top: 6px;
+}
+
+.articleListDarkBackground {
+  background-color: #f9f2ec;
+}
+
+.articleListLightBackground {
+  background-color: #f4f2f1;
+}
+
+.articleListItem {
+  display: grid;
+  grid-template-columns: 75px auto 150px;
+  grid-template-rows: 30px 30px 30px;
+  grid-template-areas:
+    "articleImage articleTitle articleTitle"
+    "articleImage articleTopic articleVotes"
+    "articleImage articleAuthor articleDate";
+  text-align: left;
+  font-size: small;
+  margin: 5px auto 5px auto;
+  box-shadow: 0px 0px 2px black;
+}
+
+.articleListItemImage {
+  grid-area: articleImage;
+  height: 60px;
+  width: 60px;
+  border-radius: 5px;
+  margin: auto;
+  box-shadow: 0px 0px 2px black;
+}
+
+.articleTitleContainer {
+  grid-area: articleTitle;
+  overflow: hidden;
+}
+
+.articleTitle {
+  font-size: medium;
+  line-height: 30px;
+  padding: 0px 10px 0px 10px;
+  margin: 2px 0px 2px 2px;
+}
+
+.articleTopicContainer {
+  grid-area: articleTopic;
+}
+
+.articleTopic {
+  font-style: italic;
+  line-height: 25px;
+  padding: 0px 10px 0px 10px;
+  margin: 2px 0px 2px 2px;
+}
+
+.articleAuthorContainer {
+  grid-area: articleAuthor;
+}
+
+.articleAuthor {
+  font-style: italic;
+  line-height: 25px;
+  padding: 0px 10px 0px 10px;
+  margin: 2px 0px 2px 2px;
+}
+
+.articleVotes {
+  grid-area: articleVotes;
+  margin: 0px 10px 0px 0px;
+  line-height: 25px;
+  text-align: right;
+}
+
+.articleDate {
+  grid-area: articleDate;
+  margin: 0px 10px 0px 0px;
+  line-height: 25px;
+  text-align: right;
+}
+
+#bottomSpace {
+  height: 30px;
+}
+
+#footerBox {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 30px;
+  background-color: #fdf1e6;
+  color: #414d52;
+  box-shadow: 0px 0px 10px #414d52;
+  display: grid;
+  grid-template-columns: 20% auto 20%;
+  font-size: small;
+}
+
+#pageNumberText {
+  grid-column: 2;
+  text-align: center;
+  margin-left: 20px;
+  font-weight: bold;
+}
+
+#articleCount {
+  font-weight: bold;
+  grid-column: 3;
+  text-align: right;
+  margin-right: 20px;
+  line-height: 28px;
+}
+
+@media (max-width: 500px) {
+  #articleCount {
+    display: none;
+  }
+}
+
+.pageNumberButton {
+  width: 20px;
+  height: 20px;
+  margin: 5px;
+}
+
+.pageNumberButton:disabled {
+  font-weight: bold;
+  box-shadow: none;
+  background-color: #414d52;
+  color: white;
+}
+
+#articleLoadingText {
+  margin-top: 30vh;
+  color: #414d52;
+}
+
+.lds-ellipsis {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+
+.lds-ellipsis div {
+  position: absolute;
+  top: 33px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #a2baab;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+
+.lds-ellipsis div:nth-child(1) {
+  left: 8px;
+  animation: lds-ellipsis1 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(2) {
+  left: 8px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(3) {
+  left: 32px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(4) {
+  left: 56px;
+  animation: lds-ellipsis3 0.6s infinite;
+}
+
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(24px, 0);
+  }
 }
