@@ -6,7 +6,7 @@ const ArticleItem = ({ article, className }) => {
 			<img
 				className="articleListItemImage"
 				src={article.article_img_url}
-				alt={`${article.title}`}
+				alt={article.title}
 			/>
 			<div className="articleTitleContainer">
 				<Link

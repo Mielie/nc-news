@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import { getArticles } from "./apiFunctions";
 import ArticleItem from "./ArticleItem";
 import Footer from "./Footer";
+import LoadingSpinner from "./LoadingSpinner";
 
 const ArticleList = ({ setNumArticles, pageNumber }) => {
 	const [isLoading, setIsLoading] = useState(true);
@@ -9,16 +10,11 @@ const ArticleList = ({ setNumArticles, pageNumber }) => {
 
 	useEffect(() => {
 		setIsLoading(true);
-		axios
-			.get("https://news-app-backend.onrender.com/api/articles", {
-				params: { p: pageNumber - 1 },
-			})
-			.then(({ data }) => {
-				setNumArticles(data.total_count);
-				setArticles(data.articles);
-				setIsLoading(false);
-			})
-			.catch((error) => console.log(error));
+		getArticles(pageNumber).then((articles) => {
+			setNumArticles(articles.total_count);
+			setArticles(articles.articles);
+			setIsLoading(false);
+		});
 	}, [pageNumber]);
 
 	return (
@@ -26,27 +22,20 @@ const ArticleList = ({ setNumArticles, pageNumber }) => {
 			{isLoading ? (
 				<div>
 					<p id="articleLoadingText">Loading Articles</p>
-					<div className="lds-ellipsis">
-						<div></div>
-						<div></div>
-						<div></div>
-						<div></div>
-					</div>
+					<LoadingSpinner />
 				</div>
 			) : (
-				articles.map((article, index) => {
-					return (
-						<ArticleItem
-							key={article.article_id}
-							article={article}
-							className={
-								index % 2
-									? "articleListDarkBackground"
-									: "articleListLightBackground"
-							}
-						/>
-					);
-				})
+				articles.map((article, index) => (
+					<ArticleItem
+						key={article.article_id}
+						article={article}
+						className={
+							index % 2
+								? "articleListDarkBackground"
+								: "articleListLightBackground"
+						}
+					/>
+				))
 			)}
 			<div id="bottomSpace"></div>
 		</div>

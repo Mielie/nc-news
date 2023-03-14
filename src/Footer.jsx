@@ -5,30 +5,26 @@ const Footer = ({
 	articlesPerPage,
 }) => {
 	const totalPages = Math.ceil(numArticles / articlesPerPage);
-	const pageNumbers = [<span key="0">Page: </span>];
+	const pageNumbers = [];
 
-	const changePage = (event) => {
-		setPageNumber(Number(event.target.innerText));
-	};
-
-	let p = pageNumber - 2;
-	let q = pageNumber + 2;
+	let start = pageNumber - 2;
+	let end = pageNumber + 2;
 
 	if (totalPages <= 5 || pageNumber <= 3) {
-		p = 1;
-		q = totalPages;
+		start = 1;
+		end = totalPages;
 	} else if (pageNumber >= totalPages - 5) {
-		p = totalPages - 5;
-		q = totalPages;
+		start = totalPages - 5;
+		end = totalPages;
 	}
 
-	for (let n = p; n <= q; n++) {
+	for (let n = start; n <= end; n++) {
 		pageNumbers.push(
 			<button
 				className="brandedButton pageNumberButton"
 				key={n}
 				disabled={n === pageNumber ? true : false}
-				onClick={changePage}
+				onClick={() => setPageNumber(n)}
 			>
 				{n}
 			</button>
@@ -37,7 +33,10 @@ const Footer = ({
 
 	return numArticles ? (
 		<footer id="footerBox">
-			<div id="pageNumberText">{pageNumbers}</div>
+			<div id="pageNumberText">
+				<span>Page: </span>
+				{pageNumbers}
+			</div>
 			<div id="articleCount">
 				{`${numArticles} article${numArticles === 1 ? "" : "s"}`}
 			</div>
