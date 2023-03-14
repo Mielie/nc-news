@@ -1,4 +1,11 @@
+import { useLocation, Link } from "react-router-dom";
+import ArticleList from "./ArticleList";
+
 const Header = () => {
+	const { pathname: path } = useLocation();
+
+	const articleView = /\/articles\/[0-9]+/i.test(path);
+
 	return (
 		<header>
 			<div id="headerContainer">
@@ -7,8 +14,18 @@ const Header = () => {
 					Login
 				</button>
 			</div>
-			<div id="filterBar"></div>
-			<div id="sortBar"></div>
+			<div>
+				<div id="filterBackBar">
+					{articleView ? (
+						<Link id="backToArticles" to="/">
+							← Articles
+						</Link>
+					) : (
+						<p></p>
+					)}
+				</div>
+				<div id="sortBar"></div>
+			</div>
 		</header>
 	);
 };

@@ -27,6 +27,20 @@ header {
   grid-template-rows: 80px;
 }
 
+#filterBackBar {
+  height: 25px;
+  background-color: #a2baab;
+  text-align: left;
+}
+
+#backToArticles {
+  margin-left: 20px;
+  line-height: 25px;
+  font-weight: bold;
+  font-size: medium;
+  color: #414d52;
+}
+
 #titleText {
   grid-column: 1;
   line-height: 80px;
@@ -140,6 +154,52 @@ header {
   text-align: right;
 }
 
+#articleView {
+  display: grid;
+  grid-template-columns: 120px auto;
+  grid-template-rows: auto auto auto auto auto;
+  grid-template-areas:
+    "articleViewImage articleViewTitle"
+    "articleViewImage articleViewTitle"
+    "articleViewImage articleViewAuthor"
+    "articleViewImage articleViewDate"
+    "articleViewBody articleViewBody";
+  text-align: left;
+  margin-top: 20px;
+  font-family: Times New Roman;
+}
+
+#articleViewImage {
+  grid-area: articleViewImage;
+  width: 100px;
+  aspect-ratio: 1/1;
+  margin: 0px 20px 0px 20px;
+  border-radius: 5px;
+}
+
+#articleViewTitle {
+  grid-area: articleViewTitle;
+  margin-left: 20px;
+}
+
+#articleViewAuthor {
+  grid-area: articleViewAuthor;
+  margin: 3px 0px 3px 20px;
+}
+
+#articleViewDate {
+  grid-area: articleViewDate;
+  margin: 3px 0px 3px 20px;
+  font-style: italic;
+}
+
+#articleViewBody {
+  grid-area: articleViewBody;
+  margin: 20px;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
 #bottomSpace {
   height: 30px;
 }
@@ -173,6 +233,12 @@ header {
   line-height: 28px;
 }
 
+#wordCount {
+  font-weight: bold;
+  grid-column: 2;
+  line-height: 28px;
+}
+
 @media (max-width: 500px) {
   #articleCount {
     display: none;
@@ -190,6 +256,7 @@ header {
   box-shadow: none;
   background-color: #414d52;
   color: white;
+  cursor: default;
 }
 
 #articleLoadingText {

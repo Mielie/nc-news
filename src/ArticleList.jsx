@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { getArticles } from "./apiFunctions";
 import ArticleItem from "./ArticleItem";
+import { formatDate } from "./utils";
 import Footer from "./Footer";
 import LoadingSpinner from "./LoadingSpinner";
 

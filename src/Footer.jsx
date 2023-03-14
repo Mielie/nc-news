@@ -1,9 +1,15 @@
+import { useLocation } from "react-router-dom";
+
 const Footer = ({
 	pageNumber,
 	setPageNumber,
 	numArticles,
 	articlesPerPage,
+	articleWordCount,
 }) => {
+	const { pathname: path } = useLocation();
+
+	const articleView = /\/articles\/[0-9]+/i.test(path);
 	const totalPages = Math.ceil(numArticles / articlesPerPage);
 	const pageNumbers = [];
 
@@ -30,8 +36,13 @@ const Footer = ({
 			</button>
 		);
 	}
-
-	return numArticles ? (
+	return articleView ? (
+		<footer id="footerBox">
+			<div id="wordCount">
+				{articleWordCount ? `${articleWordCount} words` : null}
+			</div>
+		</footer>
+	) : numArticles ? (
 		<footer id="footerBox">
 			<div id="pageNumberText">
 				<span>Page: </span>
