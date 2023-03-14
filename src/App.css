@@ -69,28 +69,10 @@ header {
   background-color: #f4f2f1;
 }
 
-.articleListDarkBackground .articleTitle:hover {
-  background-color: #f4f2f1;
-  width: fit-content;
-  border-radius: 50px;
-  box-shadow: 0px 0px 2px #414d52;
-  font-weight: bold;
-  color: #414d52;
-}
-
-.articleListLightBackground .articleTitle:hover {
-  background-color: #f9f2ec;
-  width: fit-content;
-  border-radius: 50px;
-  box-shadow: 0px 0px 2px #414d52;
-  font-weight: bold;
-  color: #414d52;
-}
-
 .articleListItem {
   display: grid;
   grid-template-columns: 75px auto 150px;
-  grid-template-rows: 25px 25px 25px;
+  grid-template-rows: 30px 30px 30px;
   grid-template-areas:
     "articleImage articleTitle articleTitle"
     "articleImage articleTopic articleVotes"
@@ -107,33 +89,41 @@ header {
   width: 60px;
   border-radius: 5px;
   margin: auto;
+  box-shadow: 0px 0px 2px black;
+}
+
+.articleTitleContainer {
+  grid-area: articleTitle;
+  overflow: hidden;
 }
 
 .articleTitle {
-  grid-area: articleTitle;
-  overflow: hidden;
-  line-height: 21px;
+  font-size: medium;
+  line-height: 30px;
   padding: 0px 10px 0px 10px;
-  margin-top: 2px;
-  maring-bottom: 2px;
+  margin: 2px 0px 2px 2px;
+}
+
+.articleTopicContainer {
+  grid-area: articleTopic;
 }
 
 .articleTopic {
-  grid-area: articleTopic;
   font-style: italic;
-  margin: 0;
   line-height: 25px;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding: 0px 10px 0px 10px;
+  margin: 2px 0px 2px 2px;
+}
+
+.articleAuthorContainer {
+  grid-area: articleAuthor;
 }
 
 .articleAuthor {
-  grid-area: articleAuthor;
   font-style: italic;
-  margin: 0;
   line-height: 25px;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding: 0px 10px 0px 10px;
+  margin: 2px 0px 2px 2px;
 }
 
 .articleVotes {

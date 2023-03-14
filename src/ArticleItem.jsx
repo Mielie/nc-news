@@ -8,14 +8,20 @@ const ArticleItem = ({ article, className }) => {
 				src={article.article_img_url}
 				alt={`${article.title}`}
 			/>
-			<Link
-				className="articleTitle"
-				path={`/articles/${article.article_id}`}
-			>
-				{article.title}
-			</Link>
-			<p className="articleTopic">{article.topic}</p>
-			<p className="articleAuthor">{article.author}</p>
+			<div className="articleTitleContainer">
+				<Link
+					className="articleTitle"
+					path={`/articles/${article.article_id}`}
+				>
+					{article.title}
+				</Link>
+			</div>
+			<div className="articleTopicContainer">
+				<p className="articleTopic">{article.topic}</p>
+			</div>
+			<div className="articleAuthorContainer">
+				<p className="articleAuthor">{article.author}</p>
+			</div>
 			<p className="articleVotes">{article.votes} likes</p>
 			<p className="articleDate">{formatDate(article.created_at)}</p>
 		</div>
