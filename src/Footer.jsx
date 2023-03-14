@@ -11,6 +11,34 @@ const Footer = ({
 
 	const articleView = /\/articles\/[0-9]+/i.test(path);
 	const totalPages = Math.ceil(numArticles / articlesPerPage);
+	const pageNumbers = createPageNumberButtons(
+		pageNumber,
+		totalPages,
+		setPageNumber
+	);
+
+	return articleView ? (
+		<footer id="footerBox">
+			<div id="wordCount">
+				{articleWordCount ? `${articleWordCount} words` : null}
+			</div>
+		</footer>
+	) : numArticles ? (
+		<footer id="footerBox">
+			<div id="pageNumberText">
+				<span>Page: </span>
+				{pageNumbers}
+			</div>
+			<div id="articleCount">
+				{`${numArticles} article${numArticles === 1 ? "" : "s"}`}
+			</div>
+		</footer>
+	) : (
+		<footer id="footerBox"></footer>
+	);
+};
+
+const createPageNumberButtons = (pageNumber, totalPages, setPageNumber) => {
 	const pageNumbers = [];
 
 	let start = pageNumber - 2;
@@ -36,25 +64,7 @@ const Footer = ({
 			</button>
 		);
 	}
-	return articleView ? (
-		<footer id="footerBox">
-			<div id="wordCount">
-				{articleWordCount ? `${articleWordCount} words` : null}
-			</div>
-		</footer>
-	) : numArticles ? (
-		<footer id="footerBox">
-			<div id="pageNumberText">
-				<span>Page: </span>
-				{pageNumbers}
-			</div>
-			<div id="articleCount">
-				{`${numArticles} article${numArticles === 1 ? "" : "s"}`}
-			</div>
-		</footer>
-	) : (
-		<footer id="footerBox"></footer>
-	);
+	return pageNumbers;
 };
 
 export default Footer;

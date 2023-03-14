@@ -7,3 +7,9 @@ export function getArticles(pageNumber) {
 		})
 		.then(({ data }) => data);
 }
+
+export function getArticle(articleid) {
+	return axios
+		.get(`https://news-app-backend.onrender.com/api/articles/${articleid}`)
+		.then(({ data: { article } }) => article);
+}

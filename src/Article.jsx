@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { formatDate, wordCount } from "./utils";
+import LoadingSpinner from "./LoadingSpinner";
+import { getArticle } from "./apiFunctions";
 
 const Article = ({ setArticleWordCount }) => {
 	const { articleid } = useParams();
@@ -11,26 +13,17 @@ const Article = ({ setArticleWordCount }) => {
 	useEffect(() => {
 		setIsLoading(true);
 		setArticleWordCount(null);
-		axios
-			.get(
-				`https://news-app-backend.onrender.com/api/articles/${articleid}`
-			)
-			.then(({ data: { article } }) => {
-				setArticle(article);
-				setArticleWordCount(wordCount(article.body));
-				setIsLoading(false);
-			});
+		getArticle(articleid).then((article) => {
+			setArticle(article);
+			setArticleWordCount(wordCount(article.body));
+			setIsLoading(false);
+		});
 	}, [articleid]);
 
 	return isLoading ? (
 		<div>
 			<p id="articleLoadingText">Loading Article</p>
-			<div className="lds-ellipsis">
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-			</div>
+			<LoadingSpinner />
 		</div>
 	) : (
 		<article id="articleView">
