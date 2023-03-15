@@ -47,6 +47,6 @@ export function updateVoteForArticleComment(commentid, inc) {
 
 export function getUsers() {
 	return axios
-		.get("http://news-app-backend.onrender.com/api/users")
+		.get("https://news-app-backend.onrender.com/api/users")
 		.then(({ data: { users } }) => users);
 }

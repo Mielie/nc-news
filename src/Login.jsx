@@ -14,10 +14,12 @@ const Login = ({ setNumItems }) => {
 	useEffect(() => {
 		setNumItems(null);
 		setIsLoading(true);
-		getUsers().then((users) => {
-			setUsers(users);
-			setIsLoading(false);
-		});
+		getUsers()
+			.then((users) => {
+				setUsers(users);
+				setIsLoading(false);
+			})
+			.catch((err) => console.log(err));
 	}, []);
 
 	const changeUser = (newUser) => {
