@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { postNewCommentForArticle } from "./apiFunctions";
 import { UserContext } from "./contexts/UserContext";
 
-const NewComment = ({ setComments, articleid }) => {
+const NewComment = ({ setComments, articleid, setCommentCount }) => {
 	const { user } = useContext(UserContext);
 	const [newCommentText, setNewCommentText] = useState("");
 
@@ -16,8 +16,10 @@ const NewComment = ({ setComments, articleid }) => {
 			article_id: articleid,
 		};
 		setComments((currentComments) => [newComment, ...currentComments]);
+		setCommentCount((currentCount) => currentCount + 1);
 		setNewCommentText("");
 		postNewCommentForArticle(articleid, newComment).catch(() => {
+			setCommentCount((currentCount) => currentCount - 1);
 			setComments((currentComments) => {
 				return currentComments.filter(
 					(comment) => comment !== newComment

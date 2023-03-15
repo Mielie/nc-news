@@ -8,6 +8,7 @@ import NewComment from "./NewComment";
 const Comment = ({
 	articleid,
 	commentCount,
+	setCommentCount,
 	setNumItems,
 	commentPageNumber,
 }) => {
@@ -51,7 +52,11 @@ const Comment = ({
 	) : (
 		<div id="commentsBox">
 			{user && (
-				<NewComment setComments={setComments} articleid={articleid} />
+				<NewComment
+					setComments={setComments}
+					articleid={articleid}
+					setCommentCount={setCommentCount}
+				/>
 			)}
 			<CommentHistory
 				comments={comments}

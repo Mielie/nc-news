@@ -86,6 +86,7 @@ const Article = ({
 				articleid={articleid}
 				commentCount={commentCount}
 				setNumItems={setNumItems}
+				setCommentCount={setCommentCount}
 				commentPageNumber={commentPageNumber}
 			/>
 		</article>
