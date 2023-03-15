@@ -6,7 +6,7 @@ import { getUsers } from "./apiFunctions";
 import LoadingSpinner from "./LoadingSpinner";
 
 const Login = ({ setNumItems }) => {
-	const { user, setUser } = useContext(UserContext);
+	const { setUser } = useContext(UserContext);
 	const [users, setUsers] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
 	const navigate = useNavigate();
@@ -14,17 +14,15 @@ const Login = ({ setNumItems }) => {
 	useEffect(() => {
 		setNumItems(null);
 		setIsLoading(true);
-		getUsers()
-			.then((users) => {
-				setUsers(users);
-				setIsLoading(false);
-			})
-			.catch((err) => console.log(err));
+		getUsers().then((users) => {
+			setUsers(users);
+			setIsLoading(false);
+		});
 	}, []);
 
 	const changeUser = (newUser) => {
 		setUser(newUser);
-		navigate("/");
+		navigate(-1);
 	};
 
 	return isLoading ? (

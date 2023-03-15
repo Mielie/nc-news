@@ -2,17 +2,15 @@ import CommentCard from "./CommentCard";
 
 const CommentHistory = ({ comments, authorAvatars, commentCount }) => {
 	return comments.length === 0 ? (
-		<div id="commentsBox">
-			<h3 id="commentsTitle">No comments</h3>
-		</div>
+		<h3 id="commentsTitle">No comments</h3>
 	) : (
-		<div id="commentsBox">
+		<div>
 			<h3 id="commentsTitle">Recent comments ({commentCount})</h3>
 			{comments.map((comment) => (
 				<CommentCard
 					comment={comment}
 					authorAvatars={authorAvatars}
-					key={comment.comment_id}
+					key={comment.created_at}
 				/>
 			))}
 			<div id="bottomSpace"></div>

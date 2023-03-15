@@ -336,6 +336,40 @@ header {
   font-family: arial;
 }
 
+#newCommentBox {
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto auto;
+  max-width: 550px;
+  margin: 20px auto 10px auto;
+}
+
+#newCommentLabel {
+  font-family: arial;
+  font-size: small;
+}
+
+#newCommentText {
+  height: 80px;
+  padding: 5px;
+  margin: 15px 0px 15px 0px;
+  border: 1px solid #414d52;
+  border-radius: 10px;
+  font-family: arial;
+  resize: none;
+}
+
+#newCommentText:focus {
+  outline-color: #a2baab;
+}
+
+#postNewCommentButton {
+  margin: 0px auto 0px auto;
+  border-radius: 5px;
+  border: 1px solid #414d52;
+  width: 100px;
+}
+
 .commentCard {
   display: grid;
   grid-template-columns: 40px auto 100px 100px;
@@ -373,7 +407,6 @@ header {
   line-height: 40px;
   text-align: right;
   margin-right: 20px;
-  width: 50px;
 }
 
 .commentVoteControls {

@@ -25,7 +25,7 @@ const CommentCard = ({ comment, authorAvatars }) => {
 			/>
 			<p className="commentAuthor">{comment.author}</p>
 
-			{user ? (
+			{user && (
 				<div className="commentVoteControls">
 					<button
 						className="voteButton"
@@ -44,7 +44,7 @@ const CommentCard = ({ comment, authorAvatars }) => {
 						ᐯ
 					</button>
 				</div>
-			) : null}
+			)}
 
 			<p className="commentVotes">{likes} likes</p>
 			<p className="commentBody">{comment.body}</p>
