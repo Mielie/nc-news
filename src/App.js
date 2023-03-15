@@ -4,6 +4,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import ArticleList from "./ArticleList";
 import Article from "./Article";
+import Login from "./Login";
 import { useState } from "react";
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
             />
           }
         />
+        <Route path="/login" element={<Login setNumItems={setNumItems} />} />
       </Routes>
       <Footer
         pageNumber={pageNumber}

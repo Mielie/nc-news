@@ -32,6 +32,8 @@ header {
   height: 25px;
   background-color: #a2baab;
   text-align: left;
+  display: grid;
+  grid-template-columns: 50% auto;
 }
 
 #backToArticles {
@@ -65,11 +67,81 @@ header {
   font-weight: bold;
 }
 
-#loginButton {
+#loginAvatarContainer {
+  display: flex;
+}
+
+#loginButton,
+#loggedInAvatar {
   grid-column: 2;
   width: 50px;
   height: 50px;
   margin: auto 20px auto auto;
+}
+
+#loginBox {
+  margin: 20px;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  gap: 30px;
+}
+
+#loginBoxLoading {
+  margin: 20px;
+}
+
+#logoutButton {
+  border-radius: 10px;
+  margin: 2px 20px 2px auto;
+  border: none;
+  padding-left: 5px;
+  padding-right: 5px;
+  background-color: #a2baab;
+  font-size: medium;
+  font-weight: bold;
+  color: #414d52;
+  cursor: pointer;
+}
+
+#logoutButton:hover,
+#backToArticles:hover {
+  color: white;
+  text-shadow: 0px 0px 2px black;
+}
+
+.userCard {
+  display: grid;
+  grid-template-rows: 100px 25px;
+  width: 110px;
+}
+
+.userCardAvatar {
+  grid-row: 1;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.userCardUserName {
+  grid-row: 2;
+  display: none;
+  overflow: hidden;
+  line-height: 25px;
+  font-size: small;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.userCard:hover :nth-child(1) {
+  box-shadow: 0px 0px 15px #414d52;
+  border: 1px solid #414d52;
+  cursor: pointer;
+}
+
+.userCard:hover :nth-child(2) {
+  display: block;
+  cursor: pointer;
 }
 
 #articleListBox {
@@ -157,14 +229,14 @@ header {
 
 #articleView {
   display: grid;
-  grid-template-columns: 120px auto;
+  grid-template-columns: 120px auto 100px;
   grid-template-rows: auto auto auto auto auto;
   grid-template-areas:
-    "articleViewImage articleViewTitle"
-    "articleViewImage articleViewTitle"
-    "articleViewImage articleViewAuthor"
-    "articleViewImage articleViewDate"
-    "articleViewBody articleViewBody";
+    "articleViewImage articleViewTitle articleViewTitle"
+    "articleViewImage articleViewTitle articleViewTitle"
+    "articleViewImage articleViewAuthor articleViewVotes"
+    "articleViewImage articleViewDate articleViewVoteControls"
+    "articleViewBody articleViewBody articleViewBody";
   text-align: left;
   margin-top: 20px;
   font-family: Times New Roman;
@@ -192,6 +264,44 @@ header {
   grid-area: articleViewDate;
   margin: 3px 0px 3px 20px;
   font-style: italic;
+}
+
+#articleViewVotes {
+  grid-area: articleViewVotes;
+  text-align: right;
+  margin-right: 20px;
+}
+
+#articleViewVoteControls {
+  margin-right: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.voteButton {
+  width: 20px;
+  height: 20px;
+  background-color: #fdf1e6;
+  border: 1px solid #414d52;
+  border-radius: 5px;
+  color: #414d52;
+  cursor: pointer;
+  margin: 0px 0px 0px 5px;
+}
+
+.voteButton:hover {
+  background-color: #a2baab;
+  box-shadow: 0px 0px 5px #414d52;
+  font-weight: bold;
+}
+
+.voteButton:disabled {
+  background-color: #f9f2ec;
+  color: lightgray;
+  border: 1px solid lightgray;
+  box-shadow: none;
+  font-weight: normal;
+  cursor: auto;
 }
 
 #articleViewBody {
@@ -227,12 +337,12 @@ header {
 
 .commentCard {
   display: grid;
-  grid-template-columns: 40px auto 100px;
+  grid-template-columns: 40px auto 100px 100px;
   grid-template-rows: 40px auto 25px;
   grid-template-areas:
-    "commentAvatar commentAuthor commentVotes"
-    "commentBody commentBody commentBody"
-    "commentDate commentDate commentDate";
+    "commentAvatar commentAuthor commentVoteControls commentVotes"
+    "commentBody commentBody commentBody commentBody"
+    "commentDate commentDate commentDate commentDate";
   background-color: #f9f2ec;
   border: 1px solid #a2baab;
   border-radius: 10px;
@@ -259,6 +369,12 @@ header {
   line-height: 40px;
   text-align: right;
   margin-right: 20px;
+}
+
+.commentVoteControls {
+  display: flex;
+  justify-content: flex-end;
+  margin: auto 0px auto auto;
 }
 
 .commentBody {
@@ -324,7 +440,8 @@ header {
   cursor: default;
 }
 
-#articleLoadingText {
+#articleLoadingText,
+#loginLoadingText {
   margin-top: 30vh;
   color: #414d52;
 }
