@@ -30,3 +30,23 @@ export function getAuthorAvatar(author) {
 		.get(`https://news-app-backend.onrender.com/api/users/${author}`)
 		.then(({ data: { user } }) => [author, user.avatar_url]);
 }
+
+export function updateVoteForArticle(articleid, inc) {
+	return axios.patch(
+		`https://news-app-backend.onrender.com/api/articles/${articleid}`,
+		{ inc_votes: inc }
+	);
+}
+
+export function updateVoteForArticleComment(commentid, inc) {
+	return axios.patch(
+		`https://news-app-backend.onrender.com/api/comments/${commentid}`,
+		{ inc_votes: inc }
+	);
+}
+
+export function getUsers() {
+	return axios
+		.get("https://news-app-backend.onrender.com/api/users")
+		.then(({ data: { users } }) => users);
+}
