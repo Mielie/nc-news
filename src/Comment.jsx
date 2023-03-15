@@ -35,7 +35,7 @@ const Comment = ({
 							authors[item[0]] = item[1];
 							return authors;
 						},
-						{ [user.username]: user.avatar_url }
+						user ? { [user.username]: user.avatar_url } : {}
 					)
 				);
 				setNumItems(commentCount);
