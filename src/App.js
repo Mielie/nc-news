@@ -13,6 +13,7 @@ function App() {
   const [commentPageNumber, setCommentPageNumber] = useState(1);
   const [articlePerPage, setArticlePerPage] = useState(10);
   const [articleWordCount, setArticleWordCount] = useState(null);
+  const [topicFilter, setTopicFilter] = useState("");
 
   useEffect(() => {
     document.title = "NCNews";
@@ -20,12 +21,17 @@ function App() {
 
   return (
     <div className="App">
-      <Header />
+      <Header topicFilter={topicFilter} setTopicFilter={setTopicFilter} />
       <Routes>
         <Route
           path="/"
           element={
-            <ArticleList setNumItems={setNumItems} pageNumber={pageNumber} />
+            <ArticleList
+              setNumItems={setNumItems}
+              pageNumber={pageNumber}
+              topicFilter={topicFilter}
+              setTopicFilter={setTopicFilter}
+            />
           }
         />
         <Route

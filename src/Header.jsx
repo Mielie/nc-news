@@ -1,13 +1,25 @@
 import { useLocation, useNavigate, Link } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { UserContext } from "./contexts/UserContext";
+import { getTopicList } from "./apiFunctions";
 
-const Header = () => {
+const Header = ({ topicFilter, setTopicFilter }) => {
 	const { pathname: path } = useLocation();
 	const navigate = useNavigate();
 	const articleView = /\/articles\/[0-9]+/i.test(path);
 	const loginView = path === "/login";
 	const { user, setUser } = useContext(UserContext);
+	const [isLoading, setIsLoading] = useState(true);
+	const [topicList, setTopicList] = useState([]);
+
+	useEffect(() => {
+		setIsLoading(true);
+		getTopicList().then((topics) => {
+			console.log(topics);
+			setTopicList(topics);
+			setIsLoading(false);
+		});
+	}, []);
 
 	return (
 		<header>
@@ -41,7 +53,24 @@ const Header = () => {
 							← Articles
 						</Link>
 					) : (
-						<p></p>
+						<select
+							id="topicFilter"
+							name="topicFilter"
+							disabled={isLoading}
+							value={topicFilter}
+							onChange={(event) =>
+								setTopicFilter(event.target.value)
+							}
+						>
+							<option value="">All topics</option>
+							{topicList.map((topic) => {
+								return (
+									<option key={topic.slug} value={topic.slug}>
+										{topic.slug}
+									</option>
+								);
+							})}
+						</select>
 					)}
 					{loginView && user ? (
 						<button
