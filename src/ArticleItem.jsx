@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { formatDate } from "./utils";
+import { formatDate, capitaliseFirstLetter } from "./utils";
 
 const ArticleItem = ({
 	article,
@@ -25,7 +25,9 @@ const ArticleItem = ({
 			</div>
 			<div className="articleTopicContainer">
 				{topicFilter ? (
-					<p className="articleTopic">{article.topic}</p>
+					<p className="articleTopic">
+						{capitaliseFirstLetter(article.topic)}
+					</p>
 				) : (
 					<button
 						onClick={(event) => {
@@ -34,7 +36,7 @@ const ArticleItem = ({
 						}}
 						className="topicButton"
 					>
-						{article.topic}
+						{capitaliseFirstLetter(article.topic)}
 					</button>
 				)}
 			</div>

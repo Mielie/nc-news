@@ -2,6 +2,7 @@ import { useLocation, useNavigate, Link } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
 import { UserContext } from "./contexts/UserContext";
 import { getTopicList } from "./apiFunctions";
+import { capitaliseFirstLetter } from "./utils";
 
 const Header = ({
 	topicFilter,
@@ -9,6 +10,7 @@ const Header = ({
 	setAuthorFilter,
 	authorValue,
 	setAuthorValue,
+	authorFilter,
 }) => {
 	const { pathname: path } = useLocation();
 	const navigate = useNavigate();
@@ -17,6 +19,8 @@ const Header = ({
 	const { user, setUser } = useContext(UserContext);
 	const [isLoading, setIsLoading] = useState(true);
 	const [topicList, setTopicList] = useState([]);
+	const [buttonDisable, setButtonDisable] = useState(true);
+	const [buttonClear, setButtonClear] = useState(false);
 
 	useEffect(() => {
 		setIsLoading(true);
@@ -26,11 +30,49 @@ const Header = ({
 		});
 	}, []);
 
-	const authorChanged = (event) => {
-		if (event.target.value === "") {
-			setAuthorFilter("");
+	useEffect(() => {
+		if (authorFilter !== "") {
+			setClearButton();
 		}
-		setAuthorValue(event.target.value);
+	}, [authorFilter]);
+
+	const authorChanged = (event) => {
+		const currentValue = event.target.value;
+		if (currentValue !== "") {
+			currentValue === authorFilter
+				? setClearButton()
+				: setSearchButton(false);
+		} else {
+			setButtonDisable(true);
+		}
+		setAuthorValue(currentValue);
+	};
+
+	const searchAuthor = (event) => {
+		event.preventDefault();
+		if (authorValue !== "") {
+			setAuthorFilter(authorValue);
+			setClearButton();
+		}
+	};
+
+	const actionSearchClear = (event) => {
+		if (buttonClear) {
+			event.preventDefault();
+			setAuthorFilter("");
+			setAuthorValue("");
+			setSearchButton();
+		}
+	};
+
+	const setSearchButton = (disabled = true) => {
+		setButtonDisable(disabled);
+		setButtonClear(false);
+	};
+
+	const setClearButton = () => {
+		setButtonClear(true);
+		setButtonDisable(false);
 	};
 
 	return (
@@ -78,20 +120,14 @@ const Header = ({
 							{topicList.map((topic) => {
 								return (
 									<option key={topic.slug} value={topic.slug}>
-										{topic.slug}
+										{capitaliseFirstLetter(topic.slug)}
 									</option>
 								);
 							})}
 						</select>
 					)}
 					{!articleView && !loginView && (
-						<form
-							id="authorSearchForm"
-							onSubmit={(event) => {
-								event.preventDefault();
-								setAuthorFilter(authorValue);
-							}}
-						>
+						<form id="authorSearchForm" onSubmit={searchAuthor}>
 							<input
 								type="text"
 								id="authorSearchField"
@@ -99,6 +135,14 @@ const Header = ({
 								value={authorValue}
 								onChange={authorChanged}
 							/>
+							<button
+								id="authorFilterButton"
+								className="brandedButton"
+								disabled={buttonDisable}
+								onClick={actionSearchClear}
+							>
+								{buttonClear ? "Clear" : "Search"}
+							</button>
 						</form>
 					)}
 					{loginView && user ? (

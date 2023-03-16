@@ -114,7 +114,7 @@ select {
 }
 
 #authorSearchField {
-  width: 180px;
+  width: 150px;
   margin: auto;
   text-align: center;
   background-color: #fdf1e6;
@@ -131,8 +131,27 @@ select {
   outline-color: #414d52;
 }
 
+#authorFilterButton {
+  font-weight: normal;
+  margin-left: 10px;
+  padding: 2px;
+  border-radius: 4px;
+  width: 50px;
+}
+
+#authorFilterButton:disabled {
+  background-color: #f9f2ec;
+  color: lightgray;
+  border: 1px solid lightgray;
+  box-shadow: none;
+  font-weight: normal;
+  cursor: auto;
+}
+
 #loginAvatarContainer {
-  display: flex;
+  justify-self: right;
+  align-self: center;
+  width: fit-content;
 }
 
 #loginButton,

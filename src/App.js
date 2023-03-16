@@ -29,6 +29,7 @@ function App() {
         setAuthorFilter={setAuthorFilter}
         authorValue={authorValue}
         setAuthorValue={setAuthorValue}
+        authorFilter={authorFilter}
       />
       <Routes>
         <Route
