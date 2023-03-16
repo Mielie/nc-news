@@ -1,15 +1,14 @@
 import axios from "axios";
 
-export function getArticles(pageNumber, topic, author, sort_col, sort_dir) {
-	const dir = sort_dir ? "asc" : "desc";
+export function getArticles(pageNumber, topic, author, sort_by, order) {
 	return axios
 		.get("https://news-app-backend.onrender.com/api/articles", {
 			params: {
 				p: pageNumber - 1,
 				topic,
 				author,
-				sort_by: sort_col,
-				order: dir,
+				sort_by,
+				order,
 			},
 		})
 		.then(({ data }) => data);

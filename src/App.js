@@ -16,8 +16,6 @@ function App() {
   const [topicFilter, setTopicFilter] = useState("");
   const [authorFilter, setAuthorFilter] = useState("");
   const [authorValue, setAuthorValue] = useState("");
-  const [sortBy, setSortBy] = useState(undefined);
-  const [sortUp, setSortUp] = useState(false);
 
   useEffect(() => {
     document.title = "NCNews";
@@ -32,10 +30,6 @@ function App() {
         authorValue={authorValue}
         setAuthorValue={setAuthorValue}
         authorFilter={authorFilter}
-        sortBy={sortBy}
-        setSortBy={setSortBy}
-        sortUp={sortUp}
-        setSortUp={setSortUp}
       />
       <Routes>
         <Route
@@ -49,8 +43,6 @@ function App() {
               authorFilter={authorFilter}
               setAuthorFilter={setAuthorFilter}
               setAuthorValue={setAuthorValue}
-              sortBy={sortBy}
-              sortUp={sortUp}
             />
           }
         />

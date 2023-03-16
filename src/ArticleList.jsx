@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { getArticles } from "./apiFunctions";
 import ArticleItem from "./ArticleItem";
 import LoadingSpinner from "./LoadingSpinner";
+import { useSearchParams } from "react-router-dom";
 
 const ArticleList = ({
 	setNumItems,
@@ -11,17 +12,18 @@ const ArticleList = ({
 	authorFilter,
 	setAuthorFilter,
 	setAuthorValue,
-	sortBy,
-	sortUp,
 }) => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [articles, setArticles] = useState([]);
 	const [noArticlesFound, setNoArticlesFound] = useState(false);
+	const [searchParams, setSearchParams] = useSearchParams();
+	const sortBy = searchParams.get("sort_by");
+	const order = searchParams.get("order");
 
 	useEffect(() => {
 		setIsLoading(true);
 		setNumItems(null);
-		getArticles(pageNumber, topicFilter, authorFilter, sortBy, sortUp)
+		getArticles(pageNumber, topicFilter, authorFilter, sortBy, order)
 			.then((articles) => {
 				setNumItems(articles.total_count);
 				setArticles(articles.articles);
@@ -29,7 +31,6 @@ const ArticleList = ({
 				setIsLoading(false);
 			})
 			.catch((error) => {
-				console.log(error);
 				if (error.response.data.msg === "author not found") {
 					setNumItems(0);
 					setNoArticlesFound(true);
@@ -37,7 +38,7 @@ const ArticleList = ({
 					setIsLoading(false);
 				}
 			});
-	}, [pageNumber, topicFilter, authorFilter, sortBy, sortUp]);
+	}, [pageNumber, topicFilter, authorFilter, sortBy, order]);
 
 	return (
 		<div id="articleListBox">
