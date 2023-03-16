@@ -1,7 +1,15 @@
 import { Link } from "react-router-dom";
-import { formatDate } from "./utils";
+import { formatDate, capitaliseFirstLetter } from "./utils";
 
-const ArticleItem = ({ article, className }) => {
+const ArticleItem = ({
+	article,
+	className,
+	topicFilter,
+	setTopicFilter,
+	authorFilter,
+	setAuthorFilter,
+	setAuthorValue,
+}) => {
 	return (
 		<Link
 			className={`articleListItem ${className}`}
@@ -16,10 +24,37 @@ const ArticleItem = ({ article, className }) => {
 				<h2 className="articleTitle">{article.title}</h2>
 			</div>
 			<div className="articleTopicContainer">
-				<p className="articleTopic">{article.topic}</p>
+				{topicFilter ? (
+					<p className="articleTopic">
+						{capitaliseFirstLetter(article.topic)}
+					</p>
+				) : (
+					<button
+						onClick={(event) => {
+							event.preventDefault();
+							setTopicFilter(article.topic);
+						}}
+						className="topicButton"
+					>
+						{capitaliseFirstLetter(article.topic)}
+					</button>
+				)}
 			</div>
 			<div className="articleAuthorContainer">
-				<p className="articleAuthor">{article.author}</p>
+				{authorFilter ? (
+					<p className="articleAuthor">{article.author}</p>
+				) : (
+					<button
+						onClick={(event) => {
+							event.preventDefault();
+							setAuthorValue(article.author);
+							setAuthorFilter(article.author);
+						}}
+						className="topicButton"
+					>
+						{article.author}
+					</button>
+				)}
 			</div>
 			<p className="articleVotes">{article.votes} likes</p>
 			<p className="articleDate">{formatDate(article.created_at)}</p>

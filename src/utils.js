@@ -6,3 +6,7 @@ export function formatDate(string) {
 export function wordCount(string) {
 	return string.split(/\s+/).length;
 }
+
+export function capitaliseFirstLetter(str) {
+	return str.charAt(0).toUpperCase() + str.substring(1);
+}

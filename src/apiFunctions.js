@@ -1,9 +1,9 @@
 import axios from "axios";
 
-export function getArticles(pageNumber) {
+export function getArticles(pageNumber, topic, author) {
 	return axios
 		.get("https://news-app-backend.onrender.com/api/articles", {
-			params: { p: pageNumber - 1 },
+			params: { p: pageNumber - 1, topic, author },
 		})
 		.then(({ data }) => data);
 }
@@ -61,4 +61,10 @@ export function postNewCommentForArticle(articleid, comment) {
 		`https://news-app-backend.onrender.com/api/articles/${articleid}/comments`,
 		newComment
 	);
+}
+
+export function getTopicList() {
+	return axios
+		.get(`https://news-app-backend.onrender.com/api/topics`)
+		.then(({ data: { topics } }) => topics);
 }
