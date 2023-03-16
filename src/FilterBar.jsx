@@ -108,7 +108,6 @@ const FilterBar = ({
 					</select>
 				</div>
 			)}
-			;
 			{!articleView && !loginView && (
 				<form id="authorSearchForm" onSubmit={searchAuthor}>
 					<input
