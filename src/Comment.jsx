@@ -1,17 +1,21 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { UserContext } from "./contexts/UserContext";
 import LoadingSpinner from "./LoadingSpinner";
 import { getComments, getAuthorAvatar } from "./apiFunctions";
 import CommentHistory from "./CommentHistory";
+import NewComment from "./NewComment";
 
 const Comment = ({
 	articleid,
 	commentCount,
+	setCommentCount,
 	setNumItems,
 	commentPageNumber,
 }) => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [comments, setComments] = useState(null);
 	const [authorAvatars, setAuthorAvatars] = useState({});
+	const { user } = useContext(UserContext);
 
 	useEffect(() => {
 		setIsLoading(true);
@@ -27,10 +31,13 @@ const Comment = ({
 			);
 			Promise.all(promises).then((data) => {
 				setAuthorAvatars(
-					data.reduce((authors, item) => {
-						authors[item[0]] = item[1];
-						return authors;
-					}, {})
+					data.reduce(
+						(authors, item) => {
+							authors[item[0]] = item[1];
+							return authors;
+						},
+						user ? { [user.username]: user.avatar_url } : {}
+					)
 				);
 				setNumItems(commentCount);
 				setIsLoading(false);
@@ -43,11 +50,20 @@ const Comment = ({
 			<LoadingSpinner id="commentLoadingSpinner" />
 		</div>
 	) : (
-		<CommentHistory
-			comments={comments}
-			commentCount={commentCount}
-			authorAvatars={authorAvatars}
-		/>
+		<div id="commentsBox">
+			{user && (
+				<NewComment
+					setComments={setComments}
+					articleid={articleid}
+					setCommentCount={setCommentCount}
+				/>
+			)}
+			<CommentHistory
+				comments={comments}
+				commentCount={commentCount}
+				authorAvatars={authorAvatars}
+			/>
+		</div>
 	);
 };
 

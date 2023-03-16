@@ -60,7 +60,7 @@ const Article = ({
 			<p id="articleViewDate">{formatDate(article.created_at)}</p>
 			<div id="articleViewVotes">{articleVotes} likes</div>
 			<div id="articleViewVoteControls">
-				{user ? (
+				{user && (
 					<div>
 						<button
 							className="voteButton"
@@ -79,13 +79,14 @@ const Article = ({
 							ᐯ
 						</button>
 					</div>
-				) : null}
+				)}
 			</div>
 			<p id="articleViewBody">{article.body}</p>
 			<Comment
 				articleid={articleid}
 				commentCount={commentCount}
 				setNumItems={setNumItems}
+				setCommentCount={setCommentCount}
 				commentPageNumber={commentPageNumber}
 			/>
 		</article>

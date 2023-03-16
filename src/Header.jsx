@@ -48,7 +48,7 @@ const Header = () => {
 							id="logoutButton"
 							onClick={() => {
 								setUser(null);
-								navigate("/");
+								navigate(-1);
 							}}
 						>
 							Logout

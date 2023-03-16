@@ -50,3 +50,15 @@ export function getUsers() {
 		.get("https://news-app-backend.onrender.com/api/users")
 		.then(({ data: { users } }) => users);
 }
+
+export function postNewCommentForArticle(articleid, comment) {
+	const newComment = {
+		author: comment.author,
+		body: comment.body,
+		votes: comment.votes,
+	};
+	return axios.post(
+		`https://news-app-backend.onrender.com/api/articles/${articleid}/comments`,
+		newComment
+	);
+}
