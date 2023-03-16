@@ -14,6 +14,8 @@ function App() {
   const [articlePerPage, setArticlePerPage] = useState(10);
   const [articleWordCount, setArticleWordCount] = useState(null);
   const [topicFilter, setTopicFilter] = useState("");
+  const [authorFilter, setAuthorFilter] = useState("");
+  const [authorValue, setAuthorValue] = useState("");
 
   useEffect(() => {
     document.title = "NCNews";
@@ -21,7 +23,13 @@ function App() {
 
   return (
     <div className="App">
-      <Header topicFilter={topicFilter} setTopicFilter={setTopicFilter} />
+      <Header
+        topicFilter={topicFilter}
+        setTopicFilter={setTopicFilter}
+        setAuthorFilter={setAuthorFilter}
+        authorValue={authorValue}
+        setAuthorValue={setAuthorValue}
+      />
       <Routes>
         <Route
           path="/"
@@ -31,6 +39,9 @@ function App() {
               pageNumber={pageNumber}
               topicFilter={topicFilter}
               setTopicFilter={setTopicFilter}
+              authorFilter={authorFilter}
+              setAuthorFilter={setAuthorFilter}
+              setAuthorValue={setAuthorValue}
             />
           }
         />

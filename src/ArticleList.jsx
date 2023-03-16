@@ -8,19 +8,33 @@ const ArticleList = ({
 	pageNumber,
 	topicFilter,
 	setTopicFilter,
+	authorFilter,
+	setAuthorFilter,
+	setAuthorValue,
 }) => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [articles, setArticles] = useState([]);
+	const [noArticlesFound, setNoArticlesFound] = useState(false);
 
 	useEffect(() => {
 		setIsLoading(true);
 		setNumItems(null);
-		getArticles(pageNumber, topicFilter).then((articles) => {
-			setNumItems(articles.total_count);
-			setArticles(articles.articles);
-			setIsLoading(false);
-		});
-	}, [pageNumber, topicFilter]);
+		getArticles(pageNumber, topicFilter, authorFilter)
+			.then((articles) => {
+				setNumItems(articles.total_count);
+				setArticles(articles.articles);
+				setNoArticlesFound(false);
+				setIsLoading(false);
+			})
+			.catch((error) => {
+				if (error.response.data.msg === "author not found") {
+					setNumItems(0);
+					setNoArticlesFound(true);
+					setArticles([]);
+					setIsLoading(false);
+				}
+			});
+	}, [pageNumber, topicFilter, authorFilter]);
 
 	return (
 		<div id="articleListBox">
@@ -36,6 +50,9 @@ const ArticleList = ({
 						article={article}
 						setTopicFilter={setTopicFilter}
 						topicFilter={topicFilter}
+						authorFilter={authorFilter}
+						setAuthorFilter={setAuthorFilter}
+						setAuthorValue={setAuthorValue}
 						className={
 							index % 2
 								? "articleListDarkBackground"
@@ -43,6 +60,9 @@ const ArticleList = ({
 						}
 					/>
 				))
+			)}
+			{!isLoading && noArticlesFound && (
+				<p id="articleLoadingText">No articles found!</p>
 			)}
 			<div id="bottomSpace"></div>
 		</div>

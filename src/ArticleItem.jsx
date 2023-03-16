@@ -1,7 +1,15 @@
 import { Link } from "react-router-dom";
 import { formatDate } from "./utils";
 
-const ArticleItem = ({ article, className, topicFilter, setTopicFilter }) => {
+const ArticleItem = ({
+	article,
+	className,
+	topicFilter,
+	setTopicFilter,
+	authorFilter,
+	setAuthorFilter,
+	setAuthorValue,
+}) => {
 	return (
 		<Link
 			className={`articleListItem ${className}`}
@@ -31,7 +39,20 @@ const ArticleItem = ({ article, className, topicFilter, setTopicFilter }) => {
 				)}
 			</div>
 			<div className="articleAuthorContainer">
-				<p className="articleAuthor">{article.author}</p>
+				{authorFilter ? (
+					<p className="articleAuthor">{article.author}</p>
+				) : (
+					<button
+						onClick={(event) => {
+							event.preventDefault();
+							setAuthorValue(article.author);
+							setAuthorFilter(article.author);
+						}}
+						className="topicButton"
+					>
+						{article.author}
+					</button>
+				)}
 			</div>
 			<p className="articleVotes">{article.votes} likes</p>
 			<p className="articleDate">{formatDate(article.created_at)}</p>

@@ -1,9 +1,9 @@
 import axios from "axios";
 
-export function getArticles(pageNumber, topic) {
+export function getArticles(pageNumber, topic, author) {
 	return axios
 		.get("https://news-app-backend.onrender.com/api/articles", {
-			params: { p: pageNumber - 1, topic },
+			params: { p: pageNumber - 1, topic, author },
 		})
 		.then(({ data }) => data);
 }

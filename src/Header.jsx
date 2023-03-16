@@ -3,7 +3,13 @@ import { useContext, useState, useEffect } from "react";
 import { UserContext } from "./contexts/UserContext";
 import { getTopicList } from "./apiFunctions";
 
-const Header = ({ topicFilter, setTopicFilter }) => {
+const Header = ({
+	topicFilter,
+	setTopicFilter,
+	setAuthorFilter,
+	authorValue,
+	setAuthorValue,
+}) => {
 	const { pathname: path } = useLocation();
 	const navigate = useNavigate();
 	const articleView = /\/articles\/[0-9]+/i.test(path);
@@ -15,11 +21,17 @@ const Header = ({ topicFilter, setTopicFilter }) => {
 	useEffect(() => {
 		setIsLoading(true);
 		getTopicList().then((topics) => {
-			console.log(topics);
 			setTopicList(topics);
 			setIsLoading(false);
 		});
 	}, []);
+
+	const authorChanged = (event) => {
+		if (event.target.value === "") {
+			setAuthorFilter("");
+		}
+		setAuthorValue(event.target.value);
+	};
 
 	return (
 		<header>
@@ -71,6 +83,23 @@ const Header = ({ topicFilter, setTopicFilter }) => {
 								);
 							})}
 						</select>
+					)}
+					{!articleView && !loginView && (
+						<form
+							id="authorSearchForm"
+							onSubmit={(event) => {
+								event.preventDefault();
+								setAuthorFilter(authorValue);
+							}}
+						>
+							<input
+								type="text"
+								id="authorSearchField"
+								placeholder="All authors"
+								value={authorValue}
+								onChange={authorChanged}
+							/>
+						</form>
 					)}
 					{loginView && user ? (
 						<button

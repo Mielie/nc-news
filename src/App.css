@@ -109,6 +109,28 @@ select {
   border-radius: 10px;
 }
 
+#authorSearchForm {
+  margin: auto;
+}
+
+#authorSearchField {
+  width: 180px;
+  margin: auto;
+  text-align: center;
+  background-color: #fdf1e6;
+  border: none;
+  border-radius: 4px;
+  display: inline-block;
+  font: inherit;
+  font-size: smaller;
+  padding: 2px 2px 2px 5px;
+  box-shadow: 0px 0px 2px #fdf1e6;
+}
+
+#authorSearchField:focus {
+  outline-color: #414d52;
+}
+
 #loginAvatarContainer {
   display: flex;
 }
