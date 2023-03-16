@@ -11,6 +11,10 @@ const Header = ({
 	authorValue,
 	setAuthorValue,
 	authorFilter,
+	sortBy,
+	setSortBy,
+	sortUp,
+	setSortUp,
 }) => {
 	const { pathname: path } = useLocation();
 	const navigate = useNavigate();
@@ -73,6 +77,11 @@ const Header = ({
 	const setClearButton = () => {
 		setButtonClear(true);
 		setButtonDisable(false);
+	};
+
+	const updateSortBy = (event) => {
+		const currentValue = event.target.value;
+		setSortBy(currentValue ? currentValue : undefined);
 	};
 
 	return (
@@ -157,7 +166,31 @@ const Header = ({
 						</button>
 					) : null}
 				</div>
-				<div id="sortBar"></div>
+				{!articleView && !loginView && (
+					<div id="sortBar">
+						<label id="sortLabel" htmlFor="sortSelector">
+							Sort articles
+						</label>
+						<select
+							id="sortSelector"
+							value={sortBy}
+							onChange={updateSortBy}
+						>
+							<option value="">Date</option>
+							<option value="comment_count">Comment Count</option>
+							<option value="votes">Votes</option>
+						</select>
+						<button
+							id="sortButton"
+							className="brandedButton"
+							onClick={() => {
+								setSortUp(!sortUp);
+							}}
+						>
+							{sortUp ? "ᐱ" : "ᐯ"}
+						</button>
+					</div>
+				)}
 			</div>
 		</header>
 	);

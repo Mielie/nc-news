@@ -34,6 +34,7 @@ header {
   text-align: left;
   display: grid;
   grid-template-columns: 50% auto;
+  border-top: 2px solid #414d52;
 }
 
 select {
@@ -43,6 +44,7 @@ select {
   display: inline-block;
   font: inherit;
   font-size: smaller;
+  color: #414d52;
   padding: 2px 2px 2px 5px;
   box-shadow: 0px 0px 2px #fdf1e6;
   -webkit-box-sizing: border-box;
@@ -58,7 +60,8 @@ select {
   text-align: center;
 }
 
-#topicFilter:focus {
+#topicFilter:focus,
+#sortSelector:focus {
   outline-color: #414d52;
 }
 
@@ -85,6 +88,25 @@ select {
   cursor: pointer;
   background-color: #fdf1e6;
   color: #414d52;
+}
+
+#sortButton {
+  margin: auto auto 2px auto;
+  width: 19px;
+  height: 19px;
+  background-color: #fdf1e6;
+  border: none;
+  box-sizing: border-box;
+  border-radius: 4px;
+  padding: auto;
+  box-shadow: 0px 0px 2px #fdf1e6;
+  text-align: center;
+  color: #414d52;
+}
+
+#sortButton:hover {
+  background-color: #a2baab;
+  border: 1px solid #414d52;
 }
 
 .brandedButton:hover {
@@ -146,6 +168,28 @@ select {
   box-shadow: none;
   font-weight: normal;
   cursor: auto;
+}
+
+#sortBar {
+  border-top: 1px solid #414d52;
+  height: 35px;
+  background-color: #a2baab;
+}
+
+#sortLabel {
+  font-size: small;
+  font-weight: bold;
+  text-align: right;
+  color: #414d52;
+  margin: auto 10px auto 0px;
+  line-height: 35px;
+}
+
+#sortSelector {
+  width: 120px;
+  color: #414d52;
+  text-align: center;
+  margin: auto 10px auto auto;
 }
 
 #loginAvatarContainer {

@@ -11,6 +11,8 @@ const ArticleList = ({
 	authorFilter,
 	setAuthorFilter,
 	setAuthorValue,
+	sortBy,
+	sortUp,
 }) => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [articles, setArticles] = useState([]);
@@ -19,7 +21,7 @@ const ArticleList = ({
 	useEffect(() => {
 		setIsLoading(true);
 		setNumItems(null);
-		getArticles(pageNumber, topicFilter, authorFilter)
+		getArticles(pageNumber, topicFilter, authorFilter, sortBy, sortUp)
 			.then((articles) => {
 				setNumItems(articles.total_count);
 				setArticles(articles.articles);
@@ -27,6 +29,7 @@ const ArticleList = ({
 				setIsLoading(false);
 			})
 			.catch((error) => {
+				console.log(error);
 				if (error.response.data.msg === "author not found") {
 					setNumItems(0);
 					setNoArticlesFound(true);
@@ -34,7 +37,7 @@ const ArticleList = ({
 					setIsLoading(false);
 				}
 			});
-	}, [pageNumber, topicFilter, authorFilter]);
+	}, [pageNumber, topicFilter, authorFilter, sortBy, sortUp]);
 
 	return (
 		<div id="articleListBox">
