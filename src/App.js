@@ -5,7 +5,7 @@ import Footer from "./Footer";
 import ArticleList from "./ArticleList";
 import Article from "./Article";
 import Login from "./Login";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function App() {
   const [numItems, setNumItems] = useState(null);
@@ -13,6 +13,10 @@ function App() {
   const [commentPageNumber, setCommentPageNumber] = useState(1);
   const [articlePerPage, setArticlePerPage] = useState(10);
   const [articleWordCount, setArticleWordCount] = useState(null);
+
+  useEffect(() => {
+    document.title = "NCNews";
+  }, []);
 
   return (
     <div className="App">

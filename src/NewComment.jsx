@@ -4,9 +4,11 @@ import { UserContext } from "./contexts/UserContext";
 
 const NewComment = ({ setComments, articleid, setCommentCount }) => {
 	const { user } = useContext(UserContext);
+	const [displayError, setDisplayError] = useState(false);
 	const [newCommentText, setNewCommentText] = useState("");
 
 	const postNewComment = (event) => {
+		setDisplayError(false);
 		event.preventDefault();
 		const newComment = {
 			votes: 0,
@@ -19,6 +21,7 @@ const NewComment = ({ setComments, articleid, setCommentCount }) => {
 		setCommentCount((currentCount) => currentCount + 1);
 		setNewCommentText("");
 		postNewCommentForArticle(articleid, newComment).catch(() => {
+			setDisplayError(true);
 			setCommentCount((currentCount) => currentCount - 1);
 			setComments((currentComments) => {
 				return currentComments.filter(
@@ -31,7 +34,15 @@ const NewComment = ({ setComments, articleid, setCommentCount }) => {
 	return (
 		<div>
 			<h3 id="commentsTitle">Post a new comment</h3>
-			<form id="newCommentBox" onSubmit={postNewComment}>
+			{displayError && (
+				<p id="errorMessage">
+					An error occurred when posting your comment
+				</p>
+			)}
+			<form
+				id={displayError ? "errorBox" : "newCommentBox"}
+				onSubmit={postNewComment}
+			>
 				<textarea
 					id="newCommentText"
 					placeholder="new comment text..."
