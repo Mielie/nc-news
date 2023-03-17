@@ -6,6 +6,7 @@ import ArticleList from "./ArticleList";
 import Article from "./Article";
 import Login from "./Login";
 import { useState, useEffect } from "react";
+import InvalidPath from "./InvalidPath";
 
 function App() {
   const [numItems, setNumItems] = useState(null);
@@ -43,6 +44,7 @@ function App() {
           }
         />
         <Route path="/login" element={<Login setNumItems={setNumItems} />} />
+        <Route path="*" element={<InvalidPath />} />
       </Routes>
       <Footer
         pageNumber={pageNumber}

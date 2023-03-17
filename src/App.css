@@ -52,6 +52,22 @@ header {
   grid-column-gap: 0;
 }
 
+#FNFbox {
+  color: #414d52;
+}
+
+#FNFtitle {
+  margin: 50px auto 20px auto;
+}
+
+#FNFmessage {
+  margin: auto 50px auto 50px;
+}
+
+#homeLink {
+  font-weight: bold;
+}
+
 select {
   background-color: #fdf1e6;
   border: none;
@@ -763,6 +779,7 @@ select {
 #loginLoadingText {
   margin-top: 30vh;
   color: #414d52;
+  font-weight: bold;
 }
 
 .lds-ellipsis {

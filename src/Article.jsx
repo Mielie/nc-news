@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { formatDate, wordCount } from "./utils";
+import { formatDate, wordCount, capitaliseFirstLetter } from "./utils";
 import LoadingSpinner from "./LoadingSpinner";
 import { getArticle, updateVoteForArticle } from "./apiFunctions";
 import Comment from "./Comment";
@@ -19,19 +19,26 @@ const Article = ({
 	const [isLoading, setIsLoading] = useState(true);
 	const [commentCount, setCommentCount] = useState(null);
 	const [articleVotes, setArticleVotes] = useState(0);
+	const [articleFetchError, setArticleFetchError] = useState(null);
 
 	useEffect(() => {
 		setIsLoading(true);
 		setNumItems(null);
 		setCommentPageNumber(1);
 		setArticleWordCount(null);
-		getArticle(articleid).then((article) => {
-			setArticle(article);
-			setCommentCount(article.comment_count);
-			setArticleVotes(article.votes);
-			setArticleWordCount(wordCount(article.body));
-			setIsLoading(false);
-		});
+		setArticleFetchError(null);
+		getArticle(articleid)
+			.then((article) => {
+				setArticle(article);
+				setCommentCount(article.comment_count);
+				setArticleVotes(article.votes);
+				setArticleWordCount(wordCount(article.body));
+				setIsLoading(false);
+			})
+			.catch((error) => {
+				setArticleFetchError(error.response.data.msg);
+				setIsLoading(false);
+			});
 	}, [articleid]);
 
 	const adjustVote = (inc) => {
@@ -47,6 +54,12 @@ const Article = ({
 		<div>
 			<p id="articleLoadingText">Loading Article</p>
 			<LoadingSpinner />
+		</div>
+	) : articleFetchError ? (
+		<div>
+			<p id="articleLoadingText">
+				{capitaliseFirstLetter(articleFetchError)}
+			</p>
 		</div>
 	) : (
 		<article id="articleView">

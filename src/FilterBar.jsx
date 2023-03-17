@@ -30,10 +30,19 @@ const FilterBar = () => {
 	useEffect(() => {
 		setIsLoading(true);
 		getTopicList().then((topics) => {
-			setTopicList(topics);
+			setTopicList((currentTopics) => {
+				const topicURL = searchParams.get("topic") || "";
+				if (
+					topicURL &&
+					!topics.find((topic) => topic.slug === topicURL)
+				) {
+					return [{ slug: topicURL }, ...topics];
+				}
+				return topics;
+			});
 			setIsLoading(false);
 		});
-	}, []);
+	}, [topicValue]);
 
 	useEffect(() => {
 		const newAuthorValue = searchParams.get("author") || "";
@@ -41,7 +50,8 @@ const FilterBar = () => {
 		if (newAuthorValue) {
 			setClearButton();
 		}
-		setTopicValue(searchParams.get("topic") || "");
+		const newTopic = searchParams.get("topic") || "";
+		setTopicValue(newTopic);
 	}, [searchParams]);
 
 	const authorChanged = (event) => {
