@@ -428,6 +428,17 @@ select {
   margin: 20px auto 10px auto;
 }
 
+.removeButton {
+  border-width: 1px;
+  border-radius: 5px;
+  padding: 2px 4px 2px 4px;
+}
+
+.removeButton:hover {
+  background-color: pink;
+  box-shadow: 0px 0px 3px red;
+}
+
 #errorBox {
   display: grid;
   grid-template-columns: auto;
