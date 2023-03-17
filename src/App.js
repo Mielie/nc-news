@@ -23,27 +23,12 @@ function App() {
 
   return (
     <div className="App">
-      <Header
-        topicFilter={topicFilter}
-        setTopicFilter={setTopicFilter}
-        setAuthorFilter={setAuthorFilter}
-        authorValue={authorValue}
-        setAuthorValue={setAuthorValue}
-        authorFilter={authorFilter}
-      />
+      <Header />
       <Routes>
         <Route
           path="/"
           element={
-            <ArticleList
-              setNumItems={setNumItems}
-              pageNumber={pageNumber}
-              topicFilter={topicFilter}
-              setTopicFilter={setTopicFilter}
-              authorFilter={authorFilter}
-              setAuthorFilter={setAuthorFilter}
-              setAuthorValue={setAuthorValue}
-            />
+            <ArticleList setNumItems={setNumItems} pageNumber={pageNumber} />
           }
         />
         <Route

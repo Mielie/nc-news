@@ -4,25 +4,19 @@ import ArticleItem from "./ArticleItem";
 import LoadingSpinner from "./LoadingSpinner";
 import { useSearchParams } from "react-router-dom";
 
-const ArticleList = ({
-	setNumItems,
-	pageNumber,
-	topicFilter,
-	setTopicFilter,
-	authorFilter,
-	setAuthorFilter,
-	setAuthorValue,
-}) => {
+const ArticleList = ({ setNumItems, pageNumber }) => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [articles, setArticles] = useState([]);
 	const [noArticlesFound, setNoArticlesFound] = useState(false);
 	const [searchParams, setSearchParams] = useSearchParams();
-	const sortBy = searchParams.get("sort_by");
-	const order = searchParams.get("order");
 
 	useEffect(() => {
 		setIsLoading(true);
 		setNumItems(null);
+		const sortBy = searchParams.get("sort_by");
+		const order = searchParams.get("order");
+		const authorFilter = searchParams.get("author");
+		const topicFilter = searchParams.get("topic");
 		getArticles(pageNumber, topicFilter, authorFilter, sortBy, order)
 			.then((articles) => {
 				setNumItems(articles.total_count);
@@ -38,7 +32,7 @@ const ArticleList = ({
 					setIsLoading(false);
 				}
 			});
-	}, [pageNumber, topicFilter, authorFilter, sortBy, order]);
+	}, [pageNumber, searchParams]);
 
 	return (
 		<div id="articleListBox">
@@ -52,11 +46,6 @@ const ArticleList = ({
 					<ArticleItem
 						key={article.article_id}
 						article={article}
-						setTopicFilter={setTopicFilter}
-						topicFilter={topicFilter}
-						authorFilter={authorFilter}
-						setAuthorFilter={setAuthorFilter}
-						setAuthorValue={setAuthorValue}
 						className={
 							index % 2
 								? "articleListDarkBackground"

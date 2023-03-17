@@ -3,14 +3,7 @@ import { useContext } from "react";
 import { UserContext } from "./contexts/UserContext";
 import FilterBar from "./FilterBar";
 
-const Header = ({
-	topicFilter,
-	setTopicFilter,
-	setAuthorFilter,
-	authorValue,
-	setAuthorValue,
-	authorFilter,
-}) => {
+const Header = () => {
 	const { user, setUser } = useContext(UserContext);
 	const navigate = useNavigate();
 
@@ -40,14 +33,7 @@ const Header = ({
 				)}
 			</div>
 			<div>
-				<FilterBar
-					topicFilter={topicFilter}
-					setTopicFilter={setTopicFilter}
-					authorFilter={authorFilter}
-					setAuthorValue={setAuthorValue}
-					authorValue={authorValue}
-					setAuthorFilter={setAuthorFilter}
-				/>
+				<FilterBar />
 			</div>
 		</header>
 	);

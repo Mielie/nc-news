@@ -1,15 +1,22 @@
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { formatDate, capitaliseFirstLetter } from "./utils";
 
-const ArticleItem = ({
-	article,
-	className,
-	topicFilter,
-	setTopicFilter,
-	authorFilter,
-	setAuthorFilter,
-	setAuthorValue,
-}) => {
+const ArticleItem = ({ article, className }) => {
+	const [searchParams, setSearchParams] = useSearchParams();
+	const newParams = Object.fromEntries([...searchParams]);
+
+	const filterTopic = (event) => {
+		event.preventDefault();
+		newParams.topic = article.topic;
+		setSearchParams(newParams);
+	};
+
+	const filterAuthor = (event) => {
+		event.preventDefault();
+		newParams.author = article.author;
+		setSearchParams(newParams);
+	};
+
 	return (
 		<Link
 			className={`articleListItem ${className}`}
@@ -24,34 +31,21 @@ const ArticleItem = ({
 				<h2 className="articleTitle">{article.title}</h2>
 			</div>
 			<div className="articleTopicContainer">
-				{topicFilter ? (
+				{newParams.topic ? (
 					<p className="articleTopic">
 						{capitaliseFirstLetter(article.topic)}
 					</p>
 				) : (
-					<button
-						onClick={(event) => {
-							event.preventDefault();
-							setTopicFilter(article.topic);
-						}}
-						className="topicButton"
-					>
+					<button onClick={filterTopic} className="topicButton">
 						{capitaliseFirstLetter(article.topic)}
 					</button>
 				)}
 			</div>
 			<div className="articleAuthorContainer">
-				{authorFilter ? (
+				{newParams.author ? (
 					<p className="articleAuthor">{article.author}</p>
 				) : (
-					<button
-						onClick={(event) => {
-							event.preventDefault();
-							setAuthorValue(article.author);
-							setAuthorFilter(article.author);
-						}}
-						className="topicButton"
-					>
+					<button onClick={filterAuthor} className="topicButton">
 						{article.author}
 					</button>
 				)}

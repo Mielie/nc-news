@@ -211,7 +211,7 @@ select {
   height: 35px;
   background-color: #a2baab;
   display: grid;
-  grid-template-columns: 30px 90px 150px 30px auto;
+  grid-template-columns: auto 90px 150px 30px auto;
   text-align: left;
 }
 

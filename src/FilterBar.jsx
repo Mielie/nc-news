@@ -1,28 +1,31 @@
-import { useLocation, useNavigate, Link } from "react-router-dom";
+import {
+	useLocation,
+	useNavigate,
+	useSearchParams,
+	Link,
+} from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { UserContext } from "./contexts/UserContext";
 import { getTopicList } from "./apiFunctions";
 import { capitaliseFirstLetter } from "./utils";
 import SortBar from "./SortBar";
 
-const FilterBar = ({
-	topicFilter,
-	setTopicFilter,
-	authorFilter,
-	setAuthorFilter,
-	authorValue,
-	setAuthorValue,
-}) => {
+const FilterBar = () => {
 	const { pathname: path } = useLocation();
 	const { user, setUser } = useContext(UserContext);
-	const navigate = useNavigate();
-	const articleView = /\/articles\/[0-9]+/i.test(path);
-	const loginView = path === "/login";
 
+	const [searchParams, setSearchParams] = useSearchParams();
 	const [isLoading, setIsLoading] = useState(true);
 	const [topicList, setTopicList] = useState([]);
 	const [buttonDisable, setButtonDisable] = useState(true);
 	const [buttonClear, setButtonClear] = useState(false);
+	const [topicValue, setTopicValue] = useState("");
+	const [authorValue, setAuthorValue] = useState("");
+
+	const navigate = useNavigate();
+	const articleView = /\/articles\/[0-9]+/i.test(path);
+	const loginView = path === "/login";
+	const newParams = Object.fromEntries([...searchParams]);
 
 	useEffect(() => {
 		setIsLoading(true);
@@ -33,17 +36,22 @@ const FilterBar = ({
 	}, []);
 
 	useEffect(() => {
-		if (authorFilter !== "") {
+		const newAuthorValue = searchParams.get("author") || "";
+		setAuthorValue(newAuthorValue);
+		if (newAuthorValue) {
 			setClearButton();
 		}
-	}, [authorFilter]);
+		setTopicValue(searchParams.get("topic") || "");
+	}, [searchParams]);
 
 	const authorChanged = (event) => {
 		const currentValue = event.target.value;
 		if (currentValue !== "") {
-			currentValue === authorFilter
+			currentValue === newParams.author
 				? setClearButton()
 				: setSearchButton(false);
+		} else if (newParams.author) {
+			setClearButton();
 		} else {
 			setButtonDisable(true);
 		}
@@ -52,16 +60,29 @@ const FilterBar = ({
 
 	const searchAuthor = (event) => {
 		event.preventDefault();
-		if (authorValue !== "") {
-			setAuthorFilter(authorValue);
-			setClearButton();
+		if (authorValue) {
+			newParams.author = authorValue;
+		} else {
+			delete newParams.author;
 		}
+		setSearchParams(newParams);
+	};
+
+	const updateTopicFilter = (event) => {
+		const currentValue = event.target.value;
+		if (currentValue) {
+			newParams.topic = event.target.value;
+		} else {
+			delete newParams.topic;
+		}
+		setSearchParams(newParams);
 	};
 
 	const actionSearchClear = (event) => {
 		if (buttonClear) {
 			event.preventDefault();
-			setAuthorFilter("");
+			delete newParams.author;
+			setSearchParams(newParams);
 			setAuthorValue("");
 			setSearchButton();
 		}
@@ -94,8 +115,8 @@ const FilterBar = ({
 						id="topicSelector"
 						name="topicFilter"
 						disabled={isLoading}
-						value={topicFilter}
-						onChange={(event) => setTopicFilter(event.target.value)}
+						value={topicValue}
+						onChange={updateTopicFilter}
 					>
 						<option value="">All topics</option>
 						{topicList.map((topic) => {
@@ -114,6 +135,7 @@ const FilterBar = ({
 						type="text"
 						id="authorSearchField"
 						placeholder="All authors"
+						autocomplete="off"
 						value={authorValue}
 						onChange={authorChanged}
 					/>

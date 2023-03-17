@@ -1,20 +1,29 @@
 import { useSearchParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 const SortBar = () => {
 	const [searchParams, setSearchParams] = useSearchParams();
-	const sortBy = searchParams.get("sort_by") || "created_at";
-	const order = searchParams.get("order") || "desc";
+	const [sortBy, setSortBy] = useState("created_at");
+	const [order, setOrder] = useState("desc");
+	const newParams = Object.fromEntries([...searchParams]);
+
+	useEffect(() => {
+		setSortBy(searchParams.get("sort_by") || "created_at");
+		setOrder(searchParams.get("order") || "desc");
+	}, [searchParams]);
 
 	const updateSortBy = (event) => {
-		setSearchParams({ sort_by: event.target.value, order });
+		newParams.sort_by = event.target.value;
+		setSearchParams(newParams);
 	};
 
 	const updateSortDirection = (event) => {
 		if (order === "asc") {
-			setSearchParams({ sort_by: sortBy, order: "desc" });
+			newParams.order = "desc";
 		} else {
-			setSearchParams({ sort_by: sortBy, order: "asc" });
+			newParams.order = "asc";
 		}
+		setSearchParams(newParams);
 	};
 
 	return (
