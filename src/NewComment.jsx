@@ -20,15 +20,26 @@ const NewComment = ({ setComments, articleid, setCommentCount }) => {
 		setComments((currentComments) => [newComment, ...currentComments]);
 		setCommentCount((currentCount) => currentCount + 1);
 		setNewCommentText("");
-		postNewCommentForArticle(articleid, newComment).catch(() => {
-			setDisplayError(true);
-			setCommentCount((currentCount) => currentCount - 1);
-			setComments((currentComments) => {
-				return currentComments.filter(
-					(comment) => comment !== newComment
-				);
+		postNewCommentForArticle(articleid, newComment)
+			.then((new_comment) => {
+				setComments((currentComments) => {
+					return currentComments.map((comment) => {
+						if (comment === newComment) {
+							comment.comment_id = new_comment.comment_id;
+						}
+						return comment;
+					});
+				});
+			})
+			.catch(() => {
+				setDisplayError(true);
+				setCommentCount((currentCount) => currentCount - 1);
+				setComments((currentComments) => {
+					return currentComments.filter(
+						(comment) => comment !== newComment
+					);
+				});
 			});
-		});
 	};
 
 	return (

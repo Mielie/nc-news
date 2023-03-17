@@ -3,11 +3,12 @@ import { getArticles } from "./apiFunctions";
 import ArticleItem from "./ArticleItem";
 import LoadingSpinner from "./LoadingSpinner";
 import { useSearchParams } from "react-router-dom";
+import { capitaliseFirstLetter } from "./utils";
 
 const ArticleList = ({ setNumItems, pageNumber }) => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [articles, setArticles] = useState([]);
-	const [noArticlesFound, setNoArticlesFound] = useState(false);
+	const [noArticlesFound, setNoArticlesFound] = useState(null);
 	const [searchParams, setSearchParams] = useSearchParams();
 
 	useEffect(() => {
@@ -21,16 +22,14 @@ const ArticleList = ({ setNumItems, pageNumber }) => {
 			.then((articles) => {
 				setNumItems(articles.total_count);
 				setArticles(articles.articles);
-				setNoArticlesFound(false);
+				setNoArticlesFound(null);
 				setIsLoading(false);
 			})
 			.catch((error) => {
-				if (error.response.data.msg === "author not found") {
-					setNumItems(0);
-					setNoArticlesFound(true);
-					setArticles([]);
-					setIsLoading(false);
-				}
+				setNumItems(0);
+				setNoArticlesFound(error.response.data.msg);
+				setArticles([]);
+				setIsLoading(false);
 			});
 	}, [pageNumber, searchParams]);
 
@@ -55,7 +54,9 @@ const ArticleList = ({ setNumItems, pageNumber }) => {
 				))
 			)}
 			{!isLoading && noArticlesFound && (
-				<p id="articleLoadingText">No articles found!</p>
+				<p id="articleLoadingText">
+					{capitaliseFirstLetter(noArticlesFound)}
+				</p>
 			)}
 			<div id="bottomSpace"></div>
 		</div>
