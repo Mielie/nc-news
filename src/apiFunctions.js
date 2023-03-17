@@ -1,9 +1,15 @@
 import axios from "axios";
 
-export function getArticles(pageNumber, topic, author) {
+export function getArticles(pageNumber, topic, author, sort_by, order) {
 	return axios
 		.get("https://news-app-backend.onrender.com/api/articles", {
-			params: { p: pageNumber - 1, topic, author },
+			params: {
+				p: pageNumber - 1,
+				topic,
+				author,
+				sort_by,
+				order,
+			},
 		})
 		.then(({ data }) => data);
 }

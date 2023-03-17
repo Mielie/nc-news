@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { getArticles } from "./apiFunctions";
 import ArticleItem from "./ArticleItem";
 import LoadingSpinner from "./LoadingSpinner";
+import { useSearchParams } from "react-router-dom";
 
 const ArticleList = ({
 	setNumItems,
@@ -15,11 +16,14 @@ const ArticleList = ({
 	const [isLoading, setIsLoading] = useState(true);
 	const [articles, setArticles] = useState([]);
 	const [noArticlesFound, setNoArticlesFound] = useState(false);
+	const [searchParams, setSearchParams] = useSearchParams();
+	const sortBy = searchParams.get("sort_by");
+	const order = searchParams.get("order");
 
 	useEffect(() => {
 		setIsLoading(true);
 		setNumItems(null);
-		getArticles(pageNumber, topicFilter, authorFilter)
+		getArticles(pageNumber, topicFilter, authorFilter, sortBy, order)
 			.then((articles) => {
 				setNumItems(articles.total_count);
 				setArticles(articles.articles);
@@ -34,7 +38,7 @@ const ArticleList = ({
 					setIsLoading(false);
 				}
 			});
-	}, [pageNumber, topicFilter, authorFilter]);
+	}, [pageNumber, topicFilter, authorFilter, sortBy, order]);
 
 	return (
 		<div id="articleListBox">

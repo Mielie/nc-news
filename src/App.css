@@ -28,21 +28,37 @@ header {
   grid-template-rows: 80px;
 }
 
-#filterBackBar {
-  height: 35px;
+#filterBackBar1 {
   background-color: #a2baab;
   text-align: left;
+  border-top: 2px solid #414d52;
+  gap: 20px;
   display: grid;
-  grid-template-columns: 50% auto;
+  grid-template-columns: auto 100px 240px auto;
+  grid-template-rows: 35px;
+  grid-row-gap: 0;
+  grid-column-gap: 0;
+}
+
+#filterBackBar2 {
+  background-color: #a2baab;
+  text-align: left;
+  border-top: 2px solid #414d52;
+  gap: 20px;
+  display: grid;
+  grid-template-columns: auto 100px 240px auto;
+  grid-template-rows: 35px 35px;
+  grid-row-gap: 0;
+  grid-column-gap: 0;
 }
 
 select {
   background-color: #fdf1e6;
   border: none;
   border-radius: 4px;
-  display: inline-block;
   font: inherit;
   font-size: smaller;
+  color: #414d52;
   padding: 2px 2px 2px 5px;
   box-shadow: 0px 0px 2px #fdf1e6;
   -webkit-box-sizing: border-box;
@@ -52,17 +68,34 @@ select {
   -moz-appearance: none;
 }
 
-#topicFilter {
-  width: 120px;
+#filterLabel {
+  font-size: small;
+  font-weight: bold;
+  color: #414d52;
   margin: auto;
-  text-align: center;
+  line-height: 35px;
+  display: none;
 }
 
-#topicFilter:focus {
+#topicFilter {
+  grid-column: 2;
+  grid-row: 1;
+  width: 120px;
+  margin: auto 0px auto 20px;
+  text-align: left;
+}
+
+#topicSelector {
+  margin: auto;
+}
+
+#topicSelector:focus,
+#sortSelector:focus {
   outline-color: #414d52;
 }
 
 #backToArticles {
+  grid-column: 1/3;
   margin: auto auto auto 20px;
   line-height: 25px;
   font-weight: bold;
@@ -85,6 +118,27 @@ select {
   cursor: pointer;
   background-color: #fdf1e6;
   color: #414d52;
+}
+
+#sortButton {
+  grid-row: 1;
+  grid-column: 4;
+  margin: auto;
+  width: 19px;
+  height: 19px;
+  background-color: #fdf1e6;
+  border: none;
+  box-sizing: border-box;
+  border-radius: 4px;
+  padding: auto;
+  box-shadow: 0px 0px 2px #fdf1e6;
+  text-align: center;
+  color: #414d52;
+}
+
+#sortButton:hover {
+  background-color: #a2baab;
+  border: 1px solid #414d52;
 }
 
 .brandedButton:hover {
@@ -110,12 +164,14 @@ select {
 }
 
 #authorSearchForm {
-  margin: auto;
+  grid-column: 3;
+  grid-row: 1;
+  margin: auto auto auto 0px;
 }
 
 #authorSearchField {
-  width: 150px;
-  margin: auto;
+  width: 140px;
+  margin: auto auto auto 0px;
   text-align: center;
   background-color: #fdf1e6;
   border: none;
@@ -148,6 +204,83 @@ select {
   cursor: auto;
 }
 
+#sortBar {
+  grid-row: 2;
+  grid-column: 1/5;
+  border-top: 1px solid #414d52;
+  height: 35px;
+  background-color: #a2baab;
+  display: grid;
+  grid-template-columns: 30px 90px 150px 30px auto;
+  text-align: left;
+}
+
+@media (min-width: 550px) {
+  #filterBackBar1 {
+    grid-template-columns: auto 220px 240px auto;
+    grid-template-rows: 35px;
+  }
+
+  #filterBackBar2 {
+    grid-template-columns: auto 220px 240px auto;
+    grid-template-rows: 35px;
+  }
+
+  #topicFilter {
+    display: grid;
+    grid-template-columns: 100px 100px;
+  }
+
+  #filterLabel {
+    display: inline;
+  }
+}
+
+@media (min-width: 930px) {
+  #filterBackBar1 {
+    grid-template-columns: auto 290px 220px 240px auto;
+    grid-template-rows: 35px;
+  }
+
+  #filterBackBar2 {
+    grid-template-columns: auto 290px 220px 240px auto;
+    grid-template-rows: 35px;
+  }
+
+  #sortBar {
+    border: none;
+    grid-row: 1;
+    grid-column: 2;
+  }
+
+  #topicFilter {
+    grid-column: 3;
+  }
+
+  #authorSearchForm {
+    grid-column: 4;
+  }
+}
+
+#sortLabel {
+  grid-row: 1;
+  grid-column: 2;
+  font-size: small;
+  font-weight: bold;
+  color: #414d52;
+  margin: auto;
+  line-height: 35px;
+}
+
+#sortSelector {
+  grid-row: 1;
+  grid-column: 3;
+  width: 120px;
+  color: #414d52;
+  text-align: center;
+  margin: auto 10px auto auto;
+}
+
 #loginAvatarContainer {
   justify-self: right;
   align-self: center;
@@ -175,6 +308,7 @@ select {
 }
 
 #logoutButton {
+  grid-column: 4/6;
   border-radius: 10px;
   margin: 2px 20px 2px auto;
   border: none;
