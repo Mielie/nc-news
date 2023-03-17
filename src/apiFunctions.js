@@ -74,3 +74,9 @@ export function getTopicList() {
 		.get(`https://news-app-backend.onrender.com/api/topics`)
 		.then(({ data: { topics } }) => topics);
 }
+
+export function deleteCommentWithId(commentid) {
+	return axios.delete(
+		`https://news-app-backend.onrender.com/api/comments/${commentid}`
+	);
+}

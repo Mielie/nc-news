@@ -62,6 +62,7 @@ const Comment = ({
 				comments={comments}
 				commentCount={commentCount}
 				authorAvatars={authorAvatars}
+				setComments={setComments}
 			/>
 		</div>
 	);
