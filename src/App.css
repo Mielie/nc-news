@@ -155,6 +155,7 @@ select {
   background: none;
   border: none;
   cursor: pointer;
+  color: black;
 }
 
 .topicButton:hover {
