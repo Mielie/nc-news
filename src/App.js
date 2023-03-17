@@ -14,9 +14,6 @@ function App() {
   const [commentPageNumber, setCommentPageNumber] = useState(1);
   const [articlePerPage, setArticlePerPage] = useState(10);
   const [articleWordCount, setArticleWordCount] = useState(null);
-  const [topicFilter, setTopicFilter] = useState("");
-  const [authorFilter, setAuthorFilter] = useState("");
-  const [authorValue, setAuthorValue] = useState("");
 
   useEffect(() => {
     document.title = "NCNews";
