@@ -63,10 +63,12 @@ export function postNewCommentForArticle(articleid, comment) {
 		body: comment.body,
 		votes: comment.votes,
 	};
-	return axios.post(
-		`https://news-app-backend.onrender.com/api/articles/${articleid}/comments`,
-		newComment
-	);
+	return axios
+		.post(
+			`https://news-app-backend.onrender.com/api/articles/${articleid}/comments`,
+			newComment
+		)
+		.then(({ data: { comment } }) => comment);
 }
 
 export function getTopicList() {
