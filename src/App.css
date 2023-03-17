@@ -563,6 +563,14 @@ select {
 }
 
 .removeButton {
+  margin: auto;
+  border-width: 1px;
+  border-radius: 5px;
+  padding: 2px 4px 2px 4px;
+}
+
+.cancelRemoveButton {
+  margin: auto;
   border-width: 1px;
   border-radius: 5px;
   padding: 2px 4px 2px 4px;
@@ -571,6 +579,14 @@ select {
 .removeButton:hover {
   background-color: pink;
   box-shadow: 0px 0px 3px red;
+}
+
+.commentDeleteFailLabel {
+  font-family: arial;
+  font-weight: bold;
+  text-align: center;
+  line-height: 40px;
+  color: red;
 }
 
 #errorBox {
@@ -630,6 +646,23 @@ select {
   border-radius: 10px;
   margin: 10px auto 10px auto;
   box-shadow: 0px 0px 3px #414d52;
+  width: calc(100vw - 20px);
+  max-width: 550px;
+}
+
+.commentCardDelete {
+  display: grid;
+  grid-template-columns: 40px auto 100px 100px;
+  grid-template-rows: 40px auto 25px;
+  grid-template-areas:
+    "commentAvatar commentAuthor commentVoteControls commentVotes"
+    "commentBody commentBody commentBody commentBody"
+    "commentDate commentDate commentDate commentDate";
+  background-color: pink;
+  border: 1px solid #a2baab;
+  border-radius: 10px;
+  margin: 10px auto 10px auto;
+  box-shadow: 0px 0px 3px red;
   width: calc(100vw - 20px);
   max-width: 550px;
 }

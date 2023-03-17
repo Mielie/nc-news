@@ -135,7 +135,7 @@ const FilterBar = () => {
 						type="text"
 						id="authorSearchField"
 						placeholder="All authors"
-						autocomplete="off"
+						autoComplete="off"
 						value={authorValue}
 						onChange={authorChanged}
 					/>

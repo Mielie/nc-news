@@ -6,7 +6,13 @@ import {
 	deleteCommentWithId,
 } from "./apiFunctions";
 
-const CommentCard = ({ comment, authorAvatars, setComments }) => {
+const CommentCard = ({
+	comment,
+	authorAvatars,
+	setComments,
+	toBeDeleted,
+	setMarkedForDeletion,
+}) => {
 	const { user } = useContext(UserContext);
 	const [likes, setLikes] = useState(comment.votes);
 
@@ -21,36 +27,56 @@ const CommentCard = ({ comment, authorAvatars, setComments }) => {
 		});
 	};
 
-	const removeComment = (event) => {
-		if (window.confirm("Permanently remove comment?")) {
-			let commentIndex = 0;
-			setComments((currentComments) => {
-				return currentComments.filter((item, index) => {
-					if (item.comment_id === comment.comment_id) {
-						commentIndex = index;
-						return false;
-					}
-					return true;
-				});
-			});
-			deleteCommentWithId(comment.comment_id).catch(() => {
-				setComments((currentComments) => {
-					const newComments = [...currentComments];
-					newComments.splice(commentIndex, 0, comment);
-					return newComments;
-				});
-			});
+	const confirmRemoval = () => {
+		if (toBeDeleted) {
+			setMarkedForDeletion(null);
+		} else {
+			setMarkedForDeletion(comment.comment_id);
 		}
 	};
 
+	const removeComment = () => {
+		setMarkedForDeletion(null);
+		let commentIndex = 0;
+		setComments((currentComments) => {
+			return currentComments.filter((item, index) => {
+				if (item.comment_id === comment.comment_id) {
+					commentIndex = index;
+					return false;
+				}
+				return true;
+			});
+		});
+		deleteCommentWithId(comment.comment_id).catch(() => {
+			setComments((currentComments) => {
+				const newComments = [...currentComments];
+				comment.error = "Message deletion failed";
+				newComments.splice(commentIndex, 0, comment);
+				return newComments;
+			});
+		});
+	};
+
 	return (
-		<div className="commentCard">
+		<div
+			className={
+				toBeDeleted || comment.error
+					? "commentCardDelete"
+					: "commentCard"
+			}
+		>
 			<img
 				src={authorAvatars[comment.author]}
 				alt={comment.author}
 				className="commentAvatar"
 			/>
-			<p className="commentAuthor">{comment.author}</p>
+			{comment.error ? (
+				<p className="commentDeleteFailLabel">
+					Message failed to delete
+				</p>
+			) : (
+				<p className="commentAuthor">{comment.author}</p>
+			)}
 
 			{showVoteButtons && (
 				<div className="commentVoteControls">
@@ -75,14 +101,25 @@ const CommentCard = ({ comment, authorAvatars, setComments }) => {
 			{showDeleteButton && (
 				<div className="commentVoteControls">
 					<button
-						className="brandedButton removeButton"
-						onClick={removeComment}
+						className={`brandedButton ${
+							toBeDeleted ? "cancelRemoveButton" : "removeButton"
+						}`}
+						onClick={confirmRemoval}
 					>
-						Delete
+						{toBeDeleted ? "Cancel" : "Delete"}
 					</button>
 				</div>
 			)}
-			<p className="commentVotes">{likes} likes</p>
+			{toBeDeleted ? (
+				<button
+					className="brandedButton removeButton"
+					onClick={removeComment}
+				>
+					Delete
+				</button>
+			) : (
+				<p className="commentVotes">{likes} likes</p>
+			)}
 			<p className="commentBody">{comment.body}</p>
 			<p className="commentDate">{formatDate(comment.created_at)}</p>
 		</div>
